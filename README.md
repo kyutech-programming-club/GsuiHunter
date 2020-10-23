@@ -1,4 +1,4 @@
-git# g_sui_hunter
+# g_sui_hunter
 
 チャレキャラ2020：コレステローラーズ
 
