@@ -28,7 +28,24 @@ class MyApp extends StatelessWidget {
               final questList = model.questList.map(
                     (quest) => GestureDetector(
                   onTap: () {
-                    print('you tapped '+ quest.name);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Scaffold(
+                          appBar: AppBar(
+                            title: Text("クエスト詳細"),
+                          ),
+                          body: Column(
+                            children: [
+                              Text(quest.name),
+                              Image.network(quest.pictureUrl),
+                              Text('かかる時間:'+quest.time.toString()),
+                              Text('クエスト難易度:'+quest.diff.toString()),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
                   },
                   child: Card(
                     child: Column(
