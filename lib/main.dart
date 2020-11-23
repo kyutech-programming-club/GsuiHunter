@@ -26,14 +26,19 @@ class MyApp extends StatelessWidget {
           child: Consumer<QuestModel>(
             builder: (context, model, child) {
               final questList = model.questList.map(
-                    (quest) => Card(
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(quest.name),
-                      ),
-                      Image.network(quest.pictureUrl)
-                    ],
+                    (quest) => GestureDetector(
+                  onTap: () {
+                    print('you tapped '+ quest.name);
+                  },
+                  child: Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text(quest.name),
+                        ),
+                        Image.network(quest.pictureUrl)
+                      ],
+                    ),
                   ),
                 ),
               ).toList();
