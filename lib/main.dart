@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/quest_detail_page.dart';
 import 'package:g_sui_hunter/quest_model.dart';
 import 'package:g_sui_hunter/quest.dart';
 import 'package:provider/provider.dart';
@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
             builder: (context, model, child) {
               final questList = model.questList.map((quest) =>
                   QuestCard(
-                    name: quest.name,
-                    pictureUrl: quest.pictureUrl,
+                    data: quest,
                   ),
               ).toList();
 
@@ -50,43 +49,29 @@ class MyApp extends StatelessWidget {
 class QuestCard extends StatelessWidget {
   const QuestCard({
     Key key,
-    this.name,
-    this.pictureUrl,
+    this.data
   }) : super(key: key);
 
-  final String name;
-  final String pictureUrl;
+  final Quest data;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => Scaffold(
-        //       appBar: AppBar(
-        //         title: Text("クエスト詳細"),
-        //       ),
-        //       body: Column(
-        //         children: [
-        //           Text(quest.name),
-        //           Image.network(quest.pictureUrl),
-        //           Text('かかる時間:'+quest.time.toString()),
-        //           Text('クエスト難易度:'+quest.diff.toString()),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => QuestDetailPage(data: data),
+          ),
+        );
       },
       child: Card(
         child: Column(
           children: [
             ListTile(
-              title: Text(this.name),
+              title: Text(data.name),
             ),
-            Image.network(this.pictureUrl)
+            Image.network(data.pictureUrl)
           ],
         ),
       ),
