@@ -26,8 +26,11 @@ class MyApp extends StatelessWidget {
           create: (_) => QuestModel()..getQuest(),
           child: Consumer<QuestModel>(
             builder: (context, model, child) {
-              final questList = model.questList.map(
-                    (quest) => QuestCard(quest: quest),
+              final questList = model.questList.map((quest) =>
+                  QuestCard(
+                    name: quest.name,
+                    pictureUrl: quest.pictureUrl,
+                  ),
               ).toList();
 
               return  GridView.count(
@@ -47,41 +50,43 @@ class MyApp extends StatelessWidget {
 class QuestCard extends StatelessWidget {
   const QuestCard({
     Key key,
-    this.quest,
+    this.name,
+    this.pictureUrl,
   }) : super(key: key);
 
-  final Quest quest;
+  final String name;
+  final String pictureUrl;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Scaffold(
-              appBar: AppBar(
-                title: Text("クエスト詳細"),
-              ),
-              body: Column(
-                children: [
-                  Text(quest.name),
-                  Image.network(quest.pictureUrl),
-                  Text('かかる時間:'+quest.time.toString()),
-                  Text('クエスト難易度:'+quest.diff.toString()),
-                ],
-              ),
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => Scaffold(
+        //       appBar: AppBar(
+        //         title: Text("クエスト詳細"),
+        //       ),
+        //       body: Column(
+        //         children: [
+        //           Text(quest.name),
+        //           Image.network(quest.pictureUrl),
+        //           Text('かかる時間:'+quest.time.toString()),
+        //           Text('クエスト難易度:'+quest.diff.toString()),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // );
       },
       child: Card(
         child: Column(
           children: [
             ListTile(
-              title: Text(quest.name),
+              title: Text(this.name),
             ),
-            Image.network(quest.pictureUrl)
+            Image.network(this.pictureUrl)
           ],
         ),
       ),
