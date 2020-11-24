@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/quest_detail_page.dart';
-import 'package:g_sui_hunter/quest_model.dart';
-import 'package:g_sui_hunter/quest.dart';
+import 'package:g_sui_hunter/views/quest_detail_page.dart';
+import 'package:g_sui_hunter/models/quest_model.dart';
+import 'package:g_sui_hunter/models/quest.dart';
 import 'package:provider/provider.dart';
 
 void main() {

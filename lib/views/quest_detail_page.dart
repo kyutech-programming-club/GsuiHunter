@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/quest.dart';
+import 'package:g_sui_hunter/models/quest.dart';
 
 class QuestDetailPage extends StatelessWidget {
   const QuestDetailPage({
