@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/quest_model.dart';
+import 'package:g_sui_hunter/models/quest_model.dart';
+import 'package:g_sui_hunter/views/widgets/quest_card.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -25,39 +25,10 @@ class MyApp extends StatelessWidget {
           create: (_) => QuestModel()..getQuest(),
           child: Consumer<QuestModel>(
             builder: (context, model, child) {
-              final questList = model.questList.map(
-                    (quest) => GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Scaffold(
-                          appBar: AppBar(
-                            title: Text("クエスト詳細"),
-                          ),
-                          body: Column(
-                            children: [
-                              Text(quest.name),
-                              Image.network(quest.pictureUrl),
-                              Text('かかる時間:'+quest.time.toString()),
-                              Text('クエスト難易度:'+quest.diff.toString()),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Card(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text(quest.name),
-                        ),
-                        Image.network(quest.pictureUrl)
-                      ],
-                    ),
+              final questList = model.questList.map((quest) =>
+                  QuestCard(
+                    data: quest,
                   ),
-                ),
               ).toList();
 
               return  GridView.count(
