@@ -27,7 +27,9 @@ class QuestCard extends StatelessWidget {
             ListTile(
               title: Text(data.name),
             ),
-            Image.network(data.pictureUrl)
+            Expanded(
+                child: Image.network(data.pictureUrl)
+            ),
           ],
         ),
       ),
