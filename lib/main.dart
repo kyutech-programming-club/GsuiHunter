@@ -21,24 +21,34 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('自炊ハンター'),
         ),
-        body: ChangeNotifierProvider(
-          create: (_) => QuestModel()..getQuest(),
-          child: Consumer<QuestModel>(
-            builder: (context, model, child) {
-              final questList = model.questList.map((quest) =>
-                  QuestCard(
-                    data: quest,
+        body: Column(
+          children: <Widget>[
+            Text("User"),
+            Text("questAdd"),
+            Expanded(
+              child: SizedBox(
+                height: 200.0,
+                child: ChangeNotifierProvider(
+                  create: (_) => QuestModel()..getQuest(),
+                  child: Consumer<QuestModel>(
+                    builder: (context, model, child) {
+                      final questList = model.questList.map((quest) =>
+                          QuestCard(
+                            data: quest,
+                          ),
+                      ).toList();
+                      return GridView.count(
+                          mainAxisSpacing: 20.0,
+                          crossAxisSpacing: 20.0,
+                          crossAxisCount: 2,
+                          children: questList,
+                        );
+                    },
                   ),
-              ).toList();
-
-              return  GridView.count(
-                mainAxisSpacing: 20.0,
-                crossAxisSpacing: 20.0,
-                crossAxisCount: 2,
-                children: questList,
-              );
-            },
-          ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
