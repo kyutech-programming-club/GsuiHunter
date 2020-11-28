@@ -63,18 +63,27 @@ class MyApp extends StatelessWidget {
                 ),
               ],
             ),
-              TextField(
-                enabled: true,
-                maxLength: 20,
-                maxLengthEnforced: false,
-                style: TextStyle(color: Colors.black),
-                obscureText: false,
-                maxLines:1 ,
-                decoration: InputDecoration(
-                    labelText: "クエスト名",
-                    hintText: "ここにクエスト名を入力してください"),
-              ),
-              Expanded(
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    "クエスト追加→",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Icon(Icons.control_point_rounded),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
               child: SizedBox(
                 height: 200.0,
                 child: ChangeNotifierProvider(
