@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/user_auth_model.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -9,8 +11,8 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () {
-              // TODO signout
+            onPressed: () async {
+              await context.read<UserAuthModel>().signOut();
             },
           ),
         ],

@@ -20,4 +20,9 @@ class UserAuthModel extends ChangeNotifier {
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
+
+  Future signOut() async {
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
+  }
 }
