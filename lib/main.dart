@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/views/quest_list_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:g_sui_hunter/views/root_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +18,20 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: QuestListPage()
+      home: FutureBuilder(
+        future: _initialization,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Container(
+              color: Colors.red,
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return RootPage();
+          }
+          return CircularProgressIndicator();
+        },
+      ),
     );
   }
 }
