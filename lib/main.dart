@@ -1,67 +1,113 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/quest_model.dart';
+import 'package:g_sui_hunter/views/widgets/quest_card.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '自炊ハンター',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('自炊ハンター'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.portrait_rounded),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+        body: Column(
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    child: ButtonTheme(
+                      minWidth: 40.0,
+                      height: 20.0,
+                      child:  RaisedButton(
+                        child: Text("クエスト受注中"),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    "GR0",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    "ハンター",
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    "クエスト追加→",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Icon(Icons.control_point_rounded),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 200.0,
+                child: ChangeNotifierProvider(
+                  create: (_) => QuestModel()..getQuest(),
+                  child: Consumer<QuestModel>(
+                    builder: (context, model, child) {
+                      final questList = model.questList.map((quest) =>
+                          QuestCard(
+                            data: quest,
+                          ),
+                      ).toList();
+                      return GridView.count(
+                        mainAxisSpacing: 20.0,
+                        crossAxisSpacing: 20.0,
+                        crossAxisCount: 2,
+                        children: questList,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
