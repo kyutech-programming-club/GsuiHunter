@@ -8,7 +8,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,25 +19,94 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text('自炊ハンター'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.portrait_rounded),
+            ),
+          ],
         ),
-        body: ChangeNotifierProvider(
-          create: (_) => QuestModel()..getQuest(),
-          child: Consumer<QuestModel>(
-            builder: (context, model, child) {
-              final questList = model.questList.map((quest) =>
-                  QuestCard(
-                    data: quest,
+        body: Column(
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    child: ButtonTheme(
+                      minWidth: 40.0,
+                      height: 20.0,
+                      child:  RaisedButton(
+                        child: Text("クエスト受注中"),
+                      ),
+                    ),
                   ),
-              ).toList();
-
-              return  GridView.count(
-                mainAxisSpacing: 20.0,
-                crossAxisSpacing: 20.0,
-                crossAxisCount: 2,
-                children: questList,
-              );
-            },
-          ),
+                ),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    "GR0",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    "ハンター",
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    "クエスト追加→",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Icon(Icons.control_point_rounded),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 200.0,
+                child: ChangeNotifierProvider(
+                  create: (_) => QuestModel()..getQuest(),
+                  child: Consumer<QuestModel>(
+                    builder: (context, model, child) {
+                      final questList = model.questList.map((quest) =>
+                          QuestCard(
+                            data: quest,
+                          ),
+                      ).toList();
+                      return GridView.count(
+                        mainAxisSpacing: 20.0,
+                        crossAxisSpacing: 20.0,
+                        crossAxisCount: 2,
+                        children: questList,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
