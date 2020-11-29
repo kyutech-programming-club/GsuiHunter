@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.logout),
             onPressed: () async {
               await context.read<UserAuthModel>().signOut();
+              await context.read<UserAuthModel>().getCurrentUser();
             },
           ),
         ],

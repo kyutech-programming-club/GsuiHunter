@@ -5,14 +5,11 @@ import 'package:provider/provider.dart';
 class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserAuthModel>(
-      builder: (context, model, child) {
-        return RaisedButton(
-          child: Text('Sign in with google'),
-          onPressed: () async {
-            await model.signIn();
-          },
-        );
+    return  RaisedButton(
+      child: Text('Sign in with google'),
+      onPressed: () async {
+        await context.read<UserAuthModel>().signIn();
+        await context.read<UserAuthModel>().getCurrentUser();
       },
     );
   }
