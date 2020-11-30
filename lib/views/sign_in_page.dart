@@ -9,7 +9,6 @@ class SignInPage extends StatelessWidget {
       child: Text('Sign in with google'),
       onPressed: () async {
         await context.read<UserAuthModel>().signIn();
-        await context.read<UserAuthModel>().getCurrentUser();
       },
     );
   }

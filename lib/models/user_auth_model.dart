@@ -5,9 +5,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 class UserAuthModel extends ChangeNotifier {
   User user;
 
-  Future getCurrentUser() async {
-    this.user = FirebaseAuth.instance.currentUser;
-    notifyListeners();
+  void getUserState() {
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
+      this.user = user;
+      notifyListeners();
+    });
   }
 
   Future<UserCredential> signIn() async {

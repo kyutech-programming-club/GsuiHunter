@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => UserAuthModel()..getCurrentUser(),
+      create: (context) => UserAuthModel()..getUserState(),
       child: MaterialApp(
         title: '自炊ハンター',
         theme: ThemeData(
