@@ -22,9 +22,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        color: Colors.orange,
-      ),
+      body: Container(),
     );
   }
 }
