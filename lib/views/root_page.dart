@@ -8,18 +8,15 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserAuthModel()..getCurrentUser(),
-      child: Consumer
-      <UserAuthModel>(
-        builder: (context, model, child) {
-          if (model.user == null) {
-            return SignInPage();
-          } else {
-            return HomePage();
-          }
-        },
-      ),
+    return  Consumer
+    <UserAuthModel>(
+      builder: (context, model, child) {
+        if (model.user == null) {
+          return SignInPage();
+        } else {
+          return HomePage();
+        }
+      },
     );
   }
 }
