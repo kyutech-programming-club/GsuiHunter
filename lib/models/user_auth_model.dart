@@ -4,6 +4,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class UserAuthModel extends ChangeNotifier {
   User user;
+  bool isSignInWaiting = false;
+
+  void switchWaitingState() {
+    isSignInWaiting = !isSignInWaiting;
+    notifyListeners();
+  }
 
   void getUserState() {
     FirebaseAuth.instance
@@ -22,6 +28,7 @@ class UserAuthModel extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+      this.isSignInWaiting = false;
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (error) {
       print(error);
