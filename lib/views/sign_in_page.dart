@@ -10,9 +10,12 @@ class SignInPage extends StatelessWidget {
         title: Text('いざ、自炊ハンターの世界へ！'),
       ),
       body: Center(
-        child: RaisedButton(
+        child: context.select<UserAuthModel, bool>((value) => value.isSignInWaiting)
+            ? CircularProgressIndicator()
+            : RaisedButton(
           child: Text('Sign in with google'),
           onPressed: () async {
+            context.read<UserAuthModel>().switchWaitingState();
             await context.read<UserAuthModel>().signIn();
           },
         ),
