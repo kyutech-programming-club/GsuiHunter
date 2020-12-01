@@ -4,25 +4,43 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class UserAuthModel extends ChangeNotifier {
   User user;
+  bool isSignInWaiting = false;
 
-  Future getCurrentUser() async {
-    this.user = FirebaseAuth.instance.currentUser;
+  void switchWaitingState() {
+    isSignInWaiting = !isSignInWaiting;
     notifyListeners();
   }
 
-  Future<UserCredential> signIn() async {
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+  void getUserState() {
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User user) {
+      this.user = user;
+      notifyListeners();
+    });
+  }
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+  Future signIn() async {
+    try {
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      this.isSignInWaiting = false;
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (error) {
+      print(error);
+    }
   }
 
   Future signOut() async {
-    await FirebaseAuth.instance.signOut();
-    await GoogleSignIn().signOut();
+    try {
+      await FirebaseAuth.instance.signOut();
+      await GoogleSignIn().signOut();
+    } catch (error) {
+      print(error);
+    }
   }
 }
