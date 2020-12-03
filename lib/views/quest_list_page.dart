@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/user_auth_model.dart';
 import 'package:provider/provider.dart';
 import 'package:g_sui_hunter/models/quest_model.dart';
 import 'package:g_sui_hunter/views/widgets/quest_card.dart';
@@ -6,12 +8,19 @@ import 'package:g_sui_hunter/views/widgets/quest_card.dart';
 class QuestListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = context.select<UserAuthModel, User>((value) => value.user);
     return Scaffold(
       appBar: AppBar(
         title: Text('自炊ハンター'),
-        actions: <Widget>[
+        actions: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(user.photoURL),
+          ),
           IconButton(
-            icon: Icon(Icons.portrait_rounded),
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await context.read<UserAuthModel>().signOut();
+            },
           ),
         ],
       ),
