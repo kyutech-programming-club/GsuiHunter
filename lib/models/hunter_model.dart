@@ -11,10 +11,10 @@ class HunterModel extends ChangeNotifier {
 
   Future getHunter() async {
     final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(currentUser.uid);
-    final hunterSnapShot = await hunterRef.get();
+    final hunterSnapshot = await hunterRef.get();
 
-    if (hunterSnapShot.exists) {
-      this.hunter = Hunter(hunterSnapShot);
+    if (hunterSnapshot.exists) {
+      this.hunter = Hunter(hunterSnapshot);
       print("Welcome back");
     } else {
       hunterRef.set({
