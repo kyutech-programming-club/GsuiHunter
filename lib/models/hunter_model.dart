@@ -9,7 +9,7 @@ class HunterModel extends ChangeNotifier {
   User currentUser;
   Hunter hunter;
 
-  Future getHunter() async {
+  Future fetchHunter() async {
     final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(currentUser.uid);
     final hunterSnapshot = await hunterRef.get();
 
@@ -29,6 +29,5 @@ class HunterModel extends ChangeNotifier {
       })
           .catchError((error) => print("Failed to add hunter: $error"));
     }
-    notifyListeners();
   }
 }

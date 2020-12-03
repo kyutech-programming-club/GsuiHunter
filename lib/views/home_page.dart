@@ -15,6 +15,11 @@ class HomePage extends StatelessWidget {
         ),
       ],
       builder: (context, child) {
+        Future fetchFireStore() async {
+          await context.select<HunterModel, Future>((value) => value.fetchHunter());
+          return 'Completed fetch!';
+        }
+
         return Scaffold(
           appBar: AppBar(
             title: Text('HOME'),
@@ -31,9 +36,21 @@ class HomePage extends StatelessWidget {
             ],
           ),
           body: Center(
-            child: RaisedButton(
-              child: Text('create hunter'),
-              onPressed: () => context.read<HunterModel>().getHunter(),
+            child: FutureBuilder(
+              future: fetchFireStore(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return CircularProgressIndicator();
+                }
+                if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                }
+                if (snapshot.hasData) {
+                  return Text(snapshot.data);
+                } else {
+                  return Text("Data does not exist");
+                }
+              },
             ),
           ),
         );
