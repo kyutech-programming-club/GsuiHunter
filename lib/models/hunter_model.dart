@@ -29,5 +29,6 @@ class HunterModel extends ChangeNotifier {
       })
           .catchError((error) => print("Failed to add hunter: $error"));
     }
+    notifyListeners();
   }
 }
