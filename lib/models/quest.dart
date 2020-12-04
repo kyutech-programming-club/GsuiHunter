@@ -1,12 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Quest {
-  Quest(Map<String, Object> questData){
-    this.name = questData['name'];
-    this.time = questData['time'];
-    this.diff = questData['diff'];
-    this.pictureUrl  = questData['pictureUrl'];
+  Quest(DocumentSnapshot doc){
+    this.title = doc.data()['title'];
+    this.siteUrl = doc.data()['siteUrl'];
+    this.imageUrl = doc.data()['imageUrl'];
+    this.rank  = doc.data()['rank'];
+    this.timeAve = doc.data()['timeAve'];
+    this.tags = doc.data()['tags'];
   }
-  String name;
-  int time;
-  int diff;
-  String pictureUrl;
+  String title;
+  String siteUrl;
+  String imageUrl;
+  int rank;
+  int timeAve;
+  List<String> tags;
 }
