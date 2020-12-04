@@ -25,10 +25,10 @@ class QuestCard extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              title: Text(data.name),
+              title: Text(data.title),
             ),
             Expanded(
-                child: Image.network(data.pictureUrl)
+                child: Image.network(data.imageUrl)
             ),
           ],
         ),

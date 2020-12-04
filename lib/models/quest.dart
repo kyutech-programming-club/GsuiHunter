@@ -14,5 +14,5 @@ class Quest {
   String imageUrl;
   int rank;
   int timeAve;
-  List<String> tags;
+  List<dynamic> tags;
 }

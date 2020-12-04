@@ -17,10 +17,10 @@ class QuestDetailPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Text(data.name),
-          Image.network(data.pictureUrl),
-          Text('かかる時間:'+ data.time.toString()),
-          Text('クエスト難易度:'+ data.diff.toString()),
+          Text(data.title),
+          Image.network(data.imageUrl),
+          Text('かかる時間:'+ data.timeAve.toString()),
+          Text('クエスト難易度:'+ data.rank.toString()),
         ],
       ),
     );
