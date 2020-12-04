@@ -21,6 +21,7 @@ class QuestDetailPage extends StatelessWidget {
           Image.network(data.imageUrl),
           Text('かかる時間:'+ data.timeAve.toString()),
           Text('クエスト難易度:'+ data.rank.toString()),
+          Text(data.siteUrl),
         ],
       ),
     );
