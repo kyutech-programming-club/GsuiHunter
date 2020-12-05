@@ -43,6 +43,25 @@ class QuestDetailPage extends StatelessWidget {
               ),
             ],
           ),
+          GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0,
+            childAspectRatio: 4.0,
+            controller: new ScrollController(keepScrollOffset: false),
+            scrollDirection: Axis.vertical,
+            children: data.tags.map((value) {
+              return Container(
+                color: Colors.grey,
+                child: Center(
+                  child: Text(
+                    value,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
           FlatButton(
             onPressed: null, //TODO: クエスト登録を押したときに実行される関数の作成
             color: Theme.of(context).primaryColor,
