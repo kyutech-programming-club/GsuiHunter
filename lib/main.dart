@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
+import 'package:g_sui_hunter/views/add_quest_page.dart';
 import 'package:g_sui_hunter/views/root_page.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (BuildContext context) => RootPage(),
+          '/add_quest': (BuildContext context) => AddQuestPage(),
         },
       ),
     );
