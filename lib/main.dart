@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
+import 'package:g_sui_hunter/models/hunter_model.dart';
+import 'package:g_sui_hunter/models/quest_model.dart';
 import 'package:g_sui_hunter/views/add_quest_page.dart';
 import 'package:g_sui_hunter/views/root_page.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +16,18 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserAuthModel()..getUserState(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserAuthModel()..getUserState(),
+        ),
+        ChangeNotifierProvider<HunterModel>(
+          create: (context) => HunterModel()..fetchHunter(),
+        ),
+        ChangeNotifierProvider<QuestModel>(
+          create: (context) => QuestModel()..fetchQuest(),
+        ),
+      ],
       child: MaterialApp(
         title: '自炊ハンター',
         theme: ThemeData(
