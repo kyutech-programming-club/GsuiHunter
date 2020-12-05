@@ -23,7 +23,13 @@ class QuestDetailPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.5,
             child: Image.network(data.imageUrl),
           ),
-          Text(data.title),
+          Text(
+            data.title,
+            style: TextStyle(
+              fontSize: 30,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
           Text('かかる時間:' + data.timeAve.toString()),
           Text('クエスト難易度:' + data.rank.toString()),
           DecoratableText(
