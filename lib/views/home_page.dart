@@ -10,29 +10,16 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = context.select<UserAuthModel, User>((value) => value.user);
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<HunterModel>(
-          create: (context) => HunterModel(user)..fetchHunter(),
+    final hunter = context.select<HunterModel, Hunter>((value) => value.hunter);
+    if (hunter == null) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: CircularProgressIndicator(),
         ),
-        ChangeNotifierProvider<QuestModel>(
-          create: (context) => QuestModel()..fetchQuest(),
-        ),
-      ],
-      builder: (context, child) {
-        final hunter = context.select<HunterModel, Hunter>((value) => value.hunter);
-        if (hunter == null) {
-          return Scaffold(
-            appBar: AppBar(),
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else {
-          return QuestListPage();
-        }
-      },
-    );
+      );
+    } else {
+      return QuestListPage();
+    }
   }
 }
