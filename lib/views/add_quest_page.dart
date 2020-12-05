@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:g_sui_hunter/models/quest_model.dart';
 
 class AddQuestPage extends StatelessWidget {
   @override
@@ -17,6 +19,7 @@ class AddQuestPage extends StatelessWidget {
           RaisedButton(
             child: Text("クエスト追加"),
             onPressed: (){
+              context.read<QuestModel>().add('カレーうどん');
               Navigator.pop(context);
             },
           ),

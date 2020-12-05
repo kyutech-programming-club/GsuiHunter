@@ -11,4 +11,11 @@ class QuestModel extends ChangeNotifier {
     this.questList = questList;
     notifyListeners();
   }
+
+  Future add(String questName) async{
+    final collection = FirebaseFirestore.instance.collection("questList");
+    await collection.add({
+      'name': questName,
+    });
+  }
 }
