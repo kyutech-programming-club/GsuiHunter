@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 class AddQuestModel extends ChangeNotifier{
   String questName;
+  String groupValue = '0';
+  final List<String> questRank = ['1', '2', '3', '4', '5',];
 
   void changeQuestName(String questName) {
     this.questName = questName;

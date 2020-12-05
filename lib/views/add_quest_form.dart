@@ -22,6 +22,29 @@ class _AddQuestFormState extends State<AddQuestForm> {
             context.read<AddQuestModel>().changeQuestName(text);
           },
         ),
+        Selector<AddQuestModel, String>(
+          selector: (context, model) => model.groupValue,
+          builder: (context, model, child) {
+            final questRank = context.select<AddQuestModel, List<String>>(
+                  (value) => value.questRank,
+            );
+            final rankChoices = questRank.map((value) => Column(
+              children: [
+                Radio(
+                  value: value,
+                  groupValue: null,
+                  onChanged: null,
+                ),
+                Text(value),
+              ],
+            ),
+            ).toList();
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: rankChoices,
+            );
+          },
+        ),
         RaisedButton(
           child: Text("クエスト追加"),
           onPressed: () async{
