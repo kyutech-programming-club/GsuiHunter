@@ -10,6 +10,11 @@ class AddQuestModel extends ChangeNotifier{
     this.questName = questName;
   }
 
+  void choiceRank(String value) {
+    this.groupValue = value;
+    notifyListeners();
+  }
+
   Future add() async{
     final collection = FirebaseFirestore.instance.collection("questList");
     await collection.add({

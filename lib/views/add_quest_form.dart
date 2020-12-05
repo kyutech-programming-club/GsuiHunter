@@ -24,7 +24,7 @@ class _AddQuestFormState extends State<AddQuestForm> {
         ),
         Selector<AddQuestModel, String>(
           selector: (context, model) => model.groupValue,
-          builder: (context, model, child) {
+          builder: (context, groupValue, child) {
             final questRank = context.select<AddQuestModel, List<String>>(
                   (value) => value.questRank,
             );
@@ -32,8 +32,8 @@ class _AddQuestFormState extends State<AddQuestForm> {
               children: [
                 Radio(
                   value: value,
-                  groupValue: null,
-                  onChanged: null,
+                  groupValue: groupValue,
+                  onChanged: (value) => context.read<AddQuestModel>().choiceRank(value),
                 ),
                 Text(value),
               ],
