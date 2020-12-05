@@ -43,6 +43,16 @@ class QuestDetailPage extends StatelessWidget {
               ),
             ],
           ),
+          FlatButton(
+            onPressed: null, //TODO: クエスト登録を押したときに実行される関数の作成
+            color: Theme.of(context).primaryColor,
+            child: Text(
+              'クエスト登録',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
         ],
       ),
     );
