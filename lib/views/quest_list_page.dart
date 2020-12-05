@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/quest.dart';
+import 'package:g_sui_hunter/models/user_auth_model.dart';
 import 'package:provider/provider.dart';
 import 'package:g_sui_hunter/models/quest_model.dart';
 import 'package:g_sui_hunter/views/widgets/quest_card.dart';
@@ -6,12 +9,19 @@ import 'package:g_sui_hunter/views/widgets/quest_card.dart';
 class QuestListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = context.select<UserAuthModel, User>((value) => value.user);
     return Scaffold(
       appBar: AppBar(
         title: Text('自炊ハンター'),
-        actions: <Widget>[
+        actions: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(user.photoURL),
+          ),
           IconButton(
-            icon: Icon(Icons.portrait_rounded),
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await context.read<UserAuthModel>().signOut();
+            },
           ),
         ],
       ),
@@ -76,23 +86,21 @@ class QuestListPage extends StatelessWidget {
           Expanded(
             child: SizedBox(
               height: 200.0,
-              child: ChangeNotifierProvider(
-                create: (_) => QuestModel()..getQuest(),
-                child: Consumer<QuestModel>(
-                  builder: (context, model, child) {
-                    final questList = model.questList.map((quest) =>
-                        QuestCard(
-                          data: quest,
-                        ),
-                    ).toList();
-                    return GridView.count(
-                      mainAxisSpacing: 20.0,
-                      crossAxisSpacing: 20.0,
-                      crossAxisCount: 2,
-                      children: questList,
-                    );
-                  },
-                ),
+              child: Selector<QuestModel, List<Quest>>(
+                builder: (context, model, child) {
+                  final questList = model.map((quest) =>
+                      QuestCard(
+                        data: quest,
+                      ),
+                  ).toList();
+                  return GridView.count(
+                    mainAxisSpacing: 20.0,
+                    crossAxisSpacing: 20.0,
+                    crossAxisCount: 2,
+                    children: questList,
+                  );
+                },
+                selector: (context, model) => model.questList,
               ),
             ),
           ),
