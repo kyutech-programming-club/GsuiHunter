@@ -20,7 +20,7 @@ class QuestDetailPage extends StatelessWidget {
         children: [
           Container(
             color: Colors.black54,
-            height: 500.0,
+            height: MediaQuery.of(context).size.height * 0.5,
             child: Image.network(data.imageUrl),
           ),
           Text(data.title),
