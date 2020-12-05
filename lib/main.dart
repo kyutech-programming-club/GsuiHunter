@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest_model.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<QuestModel>(
           create: (context) => QuestModel()..fetchQuest(),
+        ),
+        ChangeNotifierProvider<TagModel>(
+          create: (context) => TagModel()..fetchTag(),
         ),
       ],
       child: MaterialApp(
