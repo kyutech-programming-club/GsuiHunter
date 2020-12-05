@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/add_quest_model.dart';
-import 'package:g_sui_hunter/models/tag.dart';
-import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:provider/provider.dart';
 
 class AddQuestForm extends StatelessWidget {
@@ -43,15 +41,14 @@ class AddQuestForm extends StatelessWidget {
               );
             },
           ),
-          Selector<TagModel, List<Tag>>(
-            selector: (context, model) => model.tagList,
-            builder: (context, tagList, child) {
-              final checkBox = tagList.map((tag) {
+          Consumer<AddQuestModel>(
+            builder: (context, model, child) {
+              final checkBox = model.checkBoxState.entries.map((checkBox) {
                 return CheckboxListTile(
-                  title: Text(tag.name),
-                  value: true,
+                  title: Text(checkBox.key),
+                  value: checkBox.value,
                   onChanged: (value) {
-                    print(tag);
+                    context.read<AddQuestModel>().choiceTag(checkBox.key, value);
                   },
                 );
               }).toList();

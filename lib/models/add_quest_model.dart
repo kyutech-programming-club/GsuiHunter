@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/tag.dart';
 
-class AddQuestModel extends ChangeNotifier{
+class AddQuestModel extends ChangeNotifier {
   String questName;
   String groupValue = '0';
   final List<String> questRank = ['1', '2', '3', '4', '5',];
@@ -20,8 +20,13 @@ class AddQuestModel extends ChangeNotifier{
   void createCheckBoxState(List<Tag> tagList) {
     tagList.forEach((tag) {
       checkBoxState[tag.name] = false;
-      print(tag.name);
     });
+    notifyListeners();
+  }
+
+  void choiceTag(String tagName, bool checkState) {
+    this.checkBoxState[tagName] = checkState;
+    notifyListeners();
   }
 
   Future add() async{
