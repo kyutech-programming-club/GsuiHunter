@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QuestModel extends ChangeNotifier {
   List<Quest> questList = [];
+  String questName;
 
   void fetchQuest() async {
     final QuerySnapshot questSnapshots = await FirebaseFirestore.instance.collection('quests').get();
@@ -12,10 +13,11 @@ class QuestModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future add(String questName) async{
+
+  Future add() async{
     final collection = FirebaseFirestore.instance.collection("questList");
     await collection.add({
-      'name': questName,
+      'name': this.questName,
     });
   }
 }

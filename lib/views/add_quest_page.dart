@@ -9,22 +9,28 @@ class AddQuestPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('新規追加'),
       ),
-      body: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(
+      body: Consumer<QuestModel>(builder: (context, model, child) {
+        return Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
                 labelText: "クエスト名を入力してください",
-                hintText: "例：激辛カレー"),
-          ),
-          RaisedButton(
-            child: Text("クエスト追加"),
-            onPressed: (){
-              context.read<QuestModel>().add('カレーうどん');
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
+                hintText: "例：激辛カレー",
+              ),
+              onChanged: (text) {
+                model.questName = text;
+              },
+            ),
+            RaisedButton(
+              child: Text("クエスト追加"),
+              onPressed: () async{
+                await model.add();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      }),
     );
   }
 }
