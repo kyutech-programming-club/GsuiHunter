@@ -78,7 +78,12 @@ class QuestListPage extends StatelessWidget {
                 child: SizedBox(
                   width: 40,
                   height: 40,
-                  child: Icon(Icons.control_point_rounded),
+                  child: IconButton(
+                    icon: Icon(Icons.control_point_rounded),
+                    onPressed: () {
+                      Navigator.pushNamed(context,'/add_quest');
+                    },
+                  ),
                 ),
               ),
             ],

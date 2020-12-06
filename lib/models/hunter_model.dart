@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/hunter.dart';
 
 class HunterModel extends ChangeNotifier {
-  HunterModel(this.currentUser);
-
-  User currentUser;
+  User currentUser = FirebaseAuth.instance.currentUser;
   Hunter hunter;
 
   Future fetchHunter() async {
