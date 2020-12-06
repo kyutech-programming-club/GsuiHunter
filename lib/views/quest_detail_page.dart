@@ -49,7 +49,7 @@ class QuestDetailPage extends StatelessWidget {
             crossAxisSpacing: 16.0,
             mainAxisSpacing: 16.0,
             childAspectRatio: 4.0,
-            controller: new ScrollController(keepScrollOffset: false),
+            controller: ScrollController(keepScrollOffset: false),
             scrollDirection: Axis.vertical,
             children: data.tags.map((value) {
               return Container(
