@@ -28,7 +28,7 @@ class AddQuestModel extends ChangeNotifier {
   void choiceTag(String tagName, bool checkState) {
     if (checkState == true) {
       _tags.add(tagName);
-    }else{
+    } else {
       _tags.remove(tagName);
     }
     this.checkBoxState[tagName] = checkState;
