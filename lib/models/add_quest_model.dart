@@ -7,6 +7,7 @@ class AddQuestModel extends ChangeNotifier {
   String groupValue = '0';
   final List<String> questRank = ['1', '2', '3', '4', '5',];
   Map<String, bool> checkBoxState = {};
+  Set<String> _tags = {};
 
   void changeQuestName(String questName) {
     this.questName = questName;
@@ -25,14 +26,22 @@ class AddQuestModel extends ChangeNotifier {
   }
 
   void choiceTag(String tagName, bool checkState) {
+    if (checkState == true) {
+      _tags.add(tagName);
+    }
     this.checkBoxState[tagName] = checkState;
     notifyListeners();
   }
 
-  Future add() async{
-    final collection = FirebaseFirestore.instance.collection("questList");
+  Future add() async {
+    final collection = FirebaseFirestore.instance.collection("quests");
     await collection.add({
-      'quest_name': this.questName,
+      'title': this.questName,
+      'siteUrl': '',
+      'imageUrl': '',
+      'rank': int.parse(this.groupValue),
+      'timeAve': 0,
+      'tags': _tags.toList(),
     });
   }
 }
