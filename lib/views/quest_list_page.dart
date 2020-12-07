@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +41,16 @@ class QuestListPage extends StatelessWidget {
                       minWidth: 40.0,
                       height: 20.0,
                       child:  RaisedButton(
-                        child: Text("クエスト受注中"),
+                        child: Selector<HunterModel, DocumentReference>(
+                          selector: (context, model) => model.hunter.currentQuest,
+                          builder: (context, currentQuest, child) {
+                            if (currentQuest == null) {
+                              return Text("クエスト未選択");
+                            } else {
+                              return Text("クエスト中");
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ),
