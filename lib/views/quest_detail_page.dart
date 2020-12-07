@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:decoratable_text/decoratable_text.dart';
+import 'package:provider/provider.dart';
 
 class QuestDetailPage extends StatelessWidget {
   const QuestDetailPage({
@@ -63,7 +65,7 @@ class QuestDetailPage extends StatelessWidget {
             }).toList(),
           ),
           FlatButton(
-            onPressed: null, //TODO: クエスト登録を押したときに実行される関数の作成
+            onPressed: () => context.read<HunterModel>().orderQuest(data),
             color: Theme.of(context).primaryColor,
             child: Text(
               'クエスト登録',
