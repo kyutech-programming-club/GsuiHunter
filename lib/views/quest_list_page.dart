@@ -27,70 +27,80 @@ class QuestListPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  child: ButtonTheme(
-                    minWidth: 40.0,
-                    height: 20.0,
-                    child:  RaisedButton(
-                      child: Text("クエスト受注中"),
+          Expanded(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    child: ButtonTheme(
+                      minWidth: 40.0,
+                      height: 20.0,
+                      child:  RaisedButton(
+                        child: Text("クエスト受注中"),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                child: Text(
-                  "GR0",
-                  style: TextStyle(
-                    fontSize: 20,
+          Expanded(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text(
+                    "GR0",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                child: Text(
-                  "ハンター",
-                  style: TextStyle(
-                    fontSize: 40,
+                Container(
+                  child: Text(
+                    "ハンター",
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
+          Expanded(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
                   "クエスト追加→",
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
-              ),
-              Container(
-                child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: IconButton(
-                    icon: Icon(Icons.control_point_rounded),
-                    onPressed: () {
-                      Navigator.pushNamed(context,'/add_quest');
-                    },
+                Container(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      icon: Icon(Icons.control_point_rounded),
+                      onPressed: () {
+                        Navigator.pushNamed(context,'/add_quest');
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Expanded(
-            child: SizedBox(
-              height: 200.0,
+            flex: 7,
+            child: RefreshIndicator(
+              onRefresh: () async => context.read<QuestModel>().fetchQuest(),
               child: Selector<QuestModel, List<Quest>>(
                 builder: (context, model, child) {
                   final questList = model.map((quest) =>
