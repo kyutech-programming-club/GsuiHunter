@@ -29,10 +29,12 @@ class QuestCard extends StatelessWidget {
               title: Text(data.title),
             ),
             Expanded(
-              child: CachedNetworkImage(
-                placeholder: (context, url) => CircularProgressIndicator(),
-                imageUrl: data.imageUrl,
-                errorWidget: (context, url, error) => Icon(Icons.error),
+              child: Center(
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  imageUrl: data.imageUrl,
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
               ),
             ),
           ],
