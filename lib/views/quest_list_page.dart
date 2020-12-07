@@ -88,24 +88,27 @@ class QuestListPage extends StatelessWidget {
               ),
             ],
           ),
-          Expanded(
-            child: SizedBox(
-              height: 200.0,
-              child: Selector<QuestModel, List<Quest>>(
-                builder: (context, model, child) {
-                  final questList = model.map((quest) =>
-                      QuestCard(
-                        data: quest,
-                      ),
-                  ).toList();
-                  return GridView.count(
-                    mainAxisSpacing: 20.0,
-                    crossAxisSpacing: 20.0,
-                    crossAxisCount: 2,
-                    children: questList,
-                  );
-                },
-                selector: (context, model) => model.questList,
+          RefreshIndicator(
+            onRefresh: () async => context.read<QuestModel>().fetchQuest(),
+            child: Expanded(
+              child: SizedBox(
+                height: 340.0,
+                child: Selector<QuestModel, List<Quest>>(
+                  builder: (context, model, child) {
+                    final questList = model.map((quest) =>
+                        QuestCard(
+                          data: quest,
+                        ),
+                    ).toList();
+                    return GridView.count(
+                      mainAxisSpacing: 20.0,
+                      crossAxisSpacing: 20.0,
+                      crossAxisCount: 2,
+                      children: questList,
+                    );
+                  },
+                  selector: (context, model) => model.questList,
+                ),
               ),
             ),
           ),
