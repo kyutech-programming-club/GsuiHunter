@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:g_sui_hunter/views/quest_detail_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 
 class QuestCard extends StatelessWidget {
   const QuestCard({
@@ -43,21 +45,30 @@ class QuestCard extends StatelessWidget {
             ),
           ),
         ),
-        Opacity(
-          opacity: 0.8,
-          child: Container(
-            alignment: Alignment.center,
-            color: Colors.grey,
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                return Icon(
-                  Icons.lock,
-                  color: Colors.yellow,
-                  size: constraints.maxWidth * 0.5,
-                );
-              },
-            ),
-          ),
+        Selector<HunterModel, int>(
+          selector: (context, model) => model.hunter.rank,
+          builder: (context, rank, child) {
+            if (rank >= data.rank) {
+              return Container();
+            } else {
+              return Opacity(
+                opacity: 0.8,
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.grey,
+                  child: LayoutBuilder(
+                    builder: (BuildContext context, BoxConstraints constraints) {
+                      return Icon(
+                        Icons.lock,
+                        color: Colors.yellow,
+                        size: constraints.maxWidth * 0.5,
+                      );
+                    },
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ],
     );
