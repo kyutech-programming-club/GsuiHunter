@@ -79,7 +79,16 @@ class QuestDetailPage extends StatelessWidget {
                   );
                 } else {
                   return FlatButton(
-                    onPressed: () => print('TODO: クエスト中のページに遷移する処理'), // TODO: クエスト中のページに遷移する処理
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      final currentQuestData =  Quest(await currentQuest.get());
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuestDetailPage(data: currentQuestData),
+                        ),
+                      );
+                    },
                     color: Colors.grey,
                     child: Text(
                       '現在、別のクエスト中です',
