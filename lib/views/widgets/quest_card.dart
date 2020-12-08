@@ -13,33 +13,53 @@ class QuestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => QuestDetailPage(data: data),
-          ),
-        );
-      },
-      child: Card(
-        child: Column(
-          children: [
-            ListTile(
-              title: Text(data.title),
-            ),
-            Expanded(
-              child: Center(
-                child: CachedNetworkImage(
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  imageUrl: data.imageUrl,
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QuestDetailPage(data: data),
               ),
+            );
+          },
+          child: Card(
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(data.title),
+                ),
+                Expanded(
+                  child: Center(
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      imageUrl: data.imageUrl,
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        Opacity(
+          opacity: 0.8,
+          child: Container(
+            alignment: Alignment.center,
+            color: Colors.grey,
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return Icon(
+                  Icons.lock,
+                  color: Colors.yellow,
+                  size: constraints.maxWidth * 0.5,
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
