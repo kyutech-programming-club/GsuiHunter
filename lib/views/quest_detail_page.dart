@@ -90,7 +90,10 @@ class QuestDetailPage extends StatelessWidget {
                             ),
                             CupertinoDialogAction(
                               child: Text('Get！'),
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () async {
+                                await Navigator.pushNamed(context, '/add_result');
+                                Navigator.pop(context);
+                              },
                             ),
                           ],
                         );
