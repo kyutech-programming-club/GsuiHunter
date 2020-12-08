@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:decoratable_text/decoratable_text.dart';
+import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class QuestDetailPage extends StatelessWidget {
@@ -67,15 +70,46 @@ class QuestDetailPage extends StatelessWidget {
               );
             }).toList(),
           ),
-          FlatButton(
-            onPressed: null, //TODO: クエスト登録を押したときに実行される関数の作成
-            color: Theme.of(context).primaryColor,
-            child: Text(
-              'クエスト登録',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
+          Selector<HunterModel, DocumentReference>(
+            selector: (context, model) => model.hunter.currentQuest,
+            builder: (context, currentQuest, child) {
+              if (currentQuest != null) {
+                if (currentQuest.id == data.id) {
+                  return FlatButton(
+                    onPressed: () => context.read<HunterModel>().clearQuest(),
+                    color: Colors.greenAccent,
+                    child: Text(
+                      'クリアする',
+                    ),
+                  );
+                } else {
+                  return FlatButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      final currentQuestData =  Quest(await currentQuest.get());
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuestDetailPage(data: currentQuestData),
+                        ),
+                      );
+                    },
+                    color: Colors.grey,
+                    child: Text(
+                      '現在、別のクエスト中です',
+                    ),
+                  );
+                }
+              } else {
+                return FlatButton(
+                  onPressed: () => context.read<HunterModel>().orderQuest(data),
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'クエスト登録',
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

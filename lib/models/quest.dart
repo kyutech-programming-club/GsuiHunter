@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Quest {
   Quest(DocumentSnapshot doc){
+    this.id = doc.id;
     this.title = doc.data()['title'];
     this.siteUrl = doc.data()['siteUrl'];
     this.imageUrl = doc.data()['imageUrl'];
@@ -9,6 +10,7 @@ class Quest {
     this.timeAve = doc.data()['timeAve'];
     this.tags = doc.data()['tags'];
   }
+  String id;
   String title;
   String siteUrl;
   String imageUrl;
