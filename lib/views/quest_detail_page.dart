@@ -4,6 +4,7 @@ import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:decoratable_text/decoratable_text.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class QuestDetailPage extends StatelessWidget {
   const QuestDetailPage({
@@ -24,7 +25,11 @@ class QuestDetailPage extends StatelessWidget {
           Container(
             color: Colors.black54,
             height: MediaQuery.of(context).size.height * 0.5,
-            child: Image.network(data.imageUrl),
+            child: CachedNetworkImage(
+              placeholder: (context, url) => CircularProgressIndicator(),
+              imageUrl: data.imageUrl,
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
           ),
           Text(
             data.title,
