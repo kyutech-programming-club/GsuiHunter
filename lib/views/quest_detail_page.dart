@@ -71,7 +71,7 @@ class QuestDetailPage extends StatelessWidget {
               if (currentQuest != null) {
                 if (currentQuest.id == data.id) {
                   return FlatButton(
-                    onPressed: () => print('TODO: クエストクリア時の処理'), // TODO: クエストクリア時の処理
+                    onPressed: () => context.read<HunterModel>().clearQuest(),
                     color: Colors.red,
                     child: Text(
                       'クリアした！',

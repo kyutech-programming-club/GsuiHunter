@@ -49,4 +49,16 @@ class HunterModel extends ChangeNotifier {
         .then((value) => notifyListeners())
         .catchError((error) => print("Failed to order quest: $error"));
   }
+
+  Future clearQuest() async {
+    final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(hunter.id);
+    hunterRef.update({
+      'currentQuest': null,
+    })
+        .then((value) => notifyListeners())
+        .catchError((error) => print("Failed to clear quest: $error"));
+
+    hunter.currentQuest = null;
+    notifyListeners();
+  }
 }
