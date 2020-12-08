@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
@@ -64,15 +65,37 @@ class QuestDetailPage extends StatelessWidget {
               );
             }).toList(),
           ),
-          FlatButton(
-            onPressed: () => context.read<HunterModel>().orderQuest(data),
-            color: Theme.of(context).primaryColor,
-            child: Text(
-              'クエスト登録',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
+          Selector<HunterModel, DocumentReference>(
+            selector: (context, model) => model.hunter.currentQuest,
+            builder: (context, currentQuest, child) {
+              if (currentQuest != null) {
+                if (currentQuest.id == data.id) {
+                  return FlatButton(
+                    onPressed: () => print('TODO: クエストクリア時の処理'), // TODO: クエストクリア時の処理
+                    color: Colors.red,
+                    child: Text(
+                      'クリアした！',
+                    ),
+                  );
+                } else {
+                  return FlatButton(
+                    onPressed: () => print('TODO: クエスト中のページに遷移する処理'), // TODO: クエスト中のページに遷移する処理
+                    color: Colors.grey,
+                    child: Text(
+                      '現在、別のクエスト中です',
+                    ),
+                  );
+                }
+              } else {
+                return FlatButton(
+                  onPressed: () => context.read<HunterModel>().orderQuest(data),
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'クエスト登録',
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

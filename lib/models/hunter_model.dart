@@ -41,7 +41,7 @@ class HunterModel extends ChangeNotifier {
     } else {
       hunter.quests.add(questRef);
     }
-
+    notifyListeners();
     hunterRef.update({
       'currentQuest': questRef,
       'quests': FieldValue.arrayUnion(hunter.quests),
