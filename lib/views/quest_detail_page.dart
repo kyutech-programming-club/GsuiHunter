@@ -72,9 +72,9 @@ class QuestDetailPage extends StatelessWidget {
                 if (currentQuest.id == data.id) {
                   return FlatButton(
                     onPressed: () => context.read<HunterModel>().clearQuest(),
-                    color: Colors.red,
+                    color: Colors.greenAccent,
                     child: Text(
-                      'クリアした！',
+                      'クリアする',
                     ),
                   );
                 } else {
