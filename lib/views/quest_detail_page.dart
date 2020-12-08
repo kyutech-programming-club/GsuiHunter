@@ -85,7 +85,6 @@ class QuestDetailPage extends StatelessWidget {
                 } else {
                   return FlatButton(
                     onPressed: () async {
-                      Navigator.pop(context);
                       final currentQuestData =  Quest(await currentQuest.get());
                       await Navigator.push(
                         context,
@@ -93,6 +92,7 @@ class QuestDetailPage extends StatelessWidget {
                           builder: (context) => QuestDetailPage(data: currentQuestData),
                         ),
                       );
+                      Navigator.pop(context);
                     },
                     color: Colors.grey,
                     child: Text(
