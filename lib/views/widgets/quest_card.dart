@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
@@ -51,19 +52,36 @@ class QuestCard extends StatelessWidget {
             if (rank >= data.rank) {
               return Container();
             } else {
-              return Opacity(
-                opacity: 0.8,
-                child: Container(
-                  alignment: Alignment.center,
-                  color: Colors.grey,
-                  child: LayoutBuilder(
-                    builder: (BuildContext context, BoxConstraints constraints) {
-                      return Icon(
-                        Icons.lock,
-                        color: Colors.yellow,
-                        size: constraints.maxWidth * 0.5,
-                      );
-                    },
+              return GestureDetector(
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: Text('挑戦できません'),
+                      content: Text('これはRank${data.rank}のクエストです'),
+                      actions: [
+                        CupertinoDialogAction(
+                          child: Text('OK'),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                child: Opacity(
+                  opacity: 0.8,
+                  child: Container(
+                    alignment: Alignment.center,
+                    color: Colors.grey,
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                        return Icon(
+                          Icons.lock,
+                          color: Colors.yellow,
+                          size: constraints.maxWidth * 0.5,
+                        );
+                      },
+                    ),
                   ),
                 ),
               );
