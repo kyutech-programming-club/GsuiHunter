@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:g_sui_hunter/views/widgets/clear_comment_form.dart';
 import 'package:g_sui_hunter/views/widgets/clear_time_form.dart';
 
 class AddResultPage extends StatelessWidget {
@@ -94,23 +95,7 @@ class AddResultPage extends StatelessWidget {
               ),
               Expanded(
                 flex: 3,
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('コメント'),
-                      TextField(
-                        keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
-                          hintText: 'クリアのコツや感想を教えてください',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: ClearCommentForm(),
               ),
               Expanded(
                 flex: 1,
