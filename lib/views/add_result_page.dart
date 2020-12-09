@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class AddResultPage extends StatelessWidget {
   @override
@@ -17,8 +18,20 @@ class AddResultPage extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: Container(
-              color: Colors.red,
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child:  Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('クリアタイム'),
+                  Flexible(
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Text('分')
+                ],
+              ),
             ),
           ),
           Expanded(
