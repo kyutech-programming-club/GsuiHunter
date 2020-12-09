@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -53,7 +54,16 @@ class AddResultPage extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    color: Colors.blue,
+                    alignment: Alignment.center,
+                    color: Colors.orange,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        imageUrl: '',
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
                   ),
                 ),
               ],
