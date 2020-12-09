@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/add_result_model.dart';
+import 'package:provider/provider.dart';
 
 class ClearQuestButton extends StatelessWidget {
   @override
@@ -13,7 +15,10 @@ class ClearQuestButton extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        onPressed: () => print('クエスト完了の処理'), // TODO: クエスト完了の処理
+        onPressed: () async {
+          await context.read<AddResultModel>().clearQuest();
+          await Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+        },
       ),
     );
   }
