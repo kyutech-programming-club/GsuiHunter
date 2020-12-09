@@ -23,13 +23,28 @@ class AddResultPage extends StatelessWidget {
               child:  Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('クリアタイム'),
-                  Flexible(
-                    child: TextField(
-                      textAlign: TextAlign.center,
+                  Text(
+                    'クリアタイム',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text('分')
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '分',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
