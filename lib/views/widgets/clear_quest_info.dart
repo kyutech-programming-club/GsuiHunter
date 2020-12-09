@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:g_sui_hunter/models/add_result_model.dart';
+import 'package:provider/provider.dart';
 
 class ClearQuestInfo extends StatelessWidget {
   @override
@@ -10,14 +12,14 @@ class ClearQuestInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              'Rank0',
+              'Rank${context.select<AddResultModel, int>((model) => model.currentQuest.rank)}',
               style: TextStyle(
                 fontSize: constraints.maxHeight * 0.1,
                 fontWeight: FontWeight.bold,
               ),
             ),
             AutoSizeText(
-              'デミグラスハンバーグ',
+              context.select<AddResultModel, String>((model) => model.currentQuest.title),
               style: TextStyle(
                 fontSize: constraints.maxHeight * 0.2,
                 fontWeight: FontWeight.bold,
