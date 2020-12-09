@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:g_sui_hunter/views/widgets/clear_comment_form.dart';
+import 'package:g_sui_hunter/views/widgets/clear_quest_button.dart';
 import 'package:g_sui_hunter/views/widgets/clear_time_form.dart';
 
 class AddResultPage extends StatelessWidget {
@@ -99,19 +100,7 @@ class AddResultPage extends StatelessWidget {
               ),
               Expanded(
                 flex: 1,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: FlatButton(
-                    color: Colors.green,
-                    child: Text(
-                      'クエストクリア',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    onPressed: () => print('クエスト完了の処理'), // TODO: クエスト完了の処理
-                  ),
-                ),
+                child: ClearQuestButton(),
               ),
             ],
           ),
