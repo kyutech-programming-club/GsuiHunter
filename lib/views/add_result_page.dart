@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:g_sui_hunter/views/widgets/clear_comment_form.dart';
 import 'package:g_sui_hunter/views/widgets/clear_quest_button.dart';
+import 'package:g_sui_hunter/views/widgets/clear_quest_info.dart';
 import 'package:g_sui_hunter/views/widgets/clear_time_form.dart';
 
 class AddResultPage extends StatelessWidget {
@@ -26,38 +26,7 @@ class AddResultPage extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: LayoutBuilder(
-                        builder: (BuildContext context, BoxConstraints constraints) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                'Rank0',
-                                style: TextStyle(
-                                  fontSize: constraints.maxHeight * 0.1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              AutoSizeText(
-                                'デミグラスハンバーグ',
-                                style: TextStyle(
-                                  fontSize: constraints.maxHeight * 0.2,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                'をクリア！',
-                                style: TextStyle(
-                                  fontSize: constraints.maxHeight * 0.1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+                      child: ClearQuestInfo(),
                     ),
                     Expanded(
                       flex: 1,
