@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:g_sui_hunter/models/add_result_model.dart';
+import 'package:provider/provider.dart';
 
 class ClearQuestImage extends StatelessWidget {
   @override
@@ -22,10 +24,15 @@ class ClearQuestImage extends StatelessWidget {
       alignment: Alignment.center,
       child: FittedBox(
         fit: BoxFit.contain,
-        child: CachedNetworkImage(
-          placeholder: (context, url) => CircularProgressIndicator(),
-          imageUrl: '',
-          errorWidget: (context, url, error) => Icon(Icons.error),
+        child: Selector<AddResultModel, String>(
+          selector: (context, model) => model.currentQuest.imageUrl,
+          builder: (context, imageUrl, child) {
+            return CachedNetworkImage(
+              placeholder: (context, url) => CircularProgressIndicator(),
+              imageUrl: imageUrl,
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            );
+          },
         ),
       ),
     );
