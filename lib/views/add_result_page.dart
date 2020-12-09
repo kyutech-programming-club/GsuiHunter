@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class AddResultPage extends StatelessWidget {
   @override
@@ -16,8 +17,37 @@ class AddResultPage extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    color: Colors.orange,
+                  child: LayoutBuilder(
+                    builder: (BuildContext context, BoxConstraints constraints) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'Rank0',
+                            style: TextStyle(
+                              fontSize: constraints.maxHeight * 0.1,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          AutoSizeText(
+                            'デミグラスハンバーグ',
+                            style: TextStyle(
+                              fontSize: constraints.maxHeight * 0.2,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'をクリア！',
+                            style: TextStyle(
+                              fontSize: constraints.maxHeight * 0.1,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
                 Expanded(
