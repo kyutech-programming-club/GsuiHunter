@@ -92,6 +92,7 @@ class AddResultPage extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: TextField(
+                            keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                           ),
                         ),
