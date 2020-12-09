@@ -30,7 +30,17 @@ class AddResultPage extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              color: Colors.green,
+              alignment: Alignment.center,
+              child: FlatButton(
+                color: Colors.green,
+                child: Text(
+                  'クエストクリア',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () => print('クエスト完了の処理'), // TODO: クエスト完了の処理
+              ),
             ),
           ),
         ],
