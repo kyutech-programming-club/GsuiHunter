@@ -12,8 +12,21 @@ class AddResultPage extends StatelessWidget {
         children: [
           Expanded(
             flex: 4,
-            child: Container(
-              color: Colors.blue,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.orange,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
