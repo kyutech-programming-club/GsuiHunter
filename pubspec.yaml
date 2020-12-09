@@ -19,6 +19,7 @@ dependencies:
   google_sign_in: ^4.5.1
   decoratable_text: ^0.2.2
   cached_network_image: ^2.4.1
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:
