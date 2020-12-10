@@ -15,13 +15,13 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestRef = hunterData.data()['currentQuest'];
     final currentQuestData = await currentQuestRef.get();
 
-    final hunterRank = _calcRank(hunterData, currentQuestData);
+    final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
 
     hunterRef.update({
+      'rank' : hunterRankAndExp['rank'],
+      'exp': hunterRankAndExp['exp'],
       'currentQuest': null,
       'quests': FieldValue.arrayUnion([currentQuestRef]),
-      'rank' : hunterRank,
-      'exp': FieldValue.increment(currentQuestData.data()['rank']*10),
     });
     hunter.currentQuest = null;
     notifyListeners();
@@ -36,20 +36,32 @@ class AddResultModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _calcRank(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
+  Map<String, int> _calcRankAndExp(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
     final int preRank = hunterData.data()['rank'];
+    final int questRank = currentQuestData.data()['rank'];
 
     if (preRank == 5) {
-      return preRank;
+      return {
+        'rank' : preRank,
+        'exp' : rankUpExpRule[preRank],
+      };
     }
 
     final int rankUpExp = rankUpExpRule[preRank];
     final int preExp = hunterData.data()['exp'];
 
-    if (rankUpExp <= preExp + preRank*10) {
-      return preRank + 1;
+    final bool isRankUp = (rankUpExp <= preExp + questRank*10);
+    if (isRankUp) {
+      final extraExp = preExp + questRank*10 - rankUpExp;
+      return {
+        'rank' : preRank + 1,
+        'exp' : preRank + 1 == 5 ? 500 : extraExp,
+      };
     } else {
-      return preRank;
+      return {
+        'rank' : preRank,
+        'exp' : preExp + questRank*10,
+      };
     }
   }
 
