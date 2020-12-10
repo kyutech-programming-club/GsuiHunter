@@ -13,17 +13,21 @@ class SearchedQuestList extends StatelessWidget {
       child: Selector<SearchQuestModel, List<Quest>>(
         selector: (context, model) => model.questList,
         builder: (context, model, child) {
-          final questList = model.map((quest) =>
-              QuestCard(
-                data: quest,
-              ),
-          ).toList();
-          return GridView.count(
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 20.0,
-            crossAxisCount: 2,
-            children: questList,
-          );
+          if (model == null) {
+            return Text('見つかりませんでした');
+          } else {
+            final questList = model.map((quest) =>
+                QuestCard(
+                  data: quest,
+                ),
+            ).toList();
+            return GridView.count(
+              mainAxisSpacing: 20.0,
+              crossAxisSpacing: 20.0,
+              crossAxisCount: 2,
+              children: questList,
+            );
+          }
         },
       ),
     );

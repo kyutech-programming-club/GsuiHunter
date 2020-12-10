@@ -24,14 +24,19 @@ class SearchQuestModel extends ChangeNotifier {
           .limit(1)
           .get();
       final List<dynamic> questRefs = tagData.docs[0].data()['quests'];
-      final questList = [];
-      await Future.forEach(
-        questRefs, (questRef) async {
-        final questSnapshot = await questRef.get();
-        questList.add(Quest(questSnapshot));
-      },);
-      this.questList = List<Quest>.from(questList);
-      notifyListeners();
+      if (questRefs == null) {
+        this.questList = null;
+        notifyListeners();
+      } else {
+        final questList = [];
+        await Future.forEach(
+          questRefs, (questRef) async {
+          final questSnapshot = await questRef.get();
+          questList.add(Quest(questSnapshot));
+        },);
+        this.questList = List<Quest>.from(questList);
+        notifyListeners();
+      }
     }
   }
 }
