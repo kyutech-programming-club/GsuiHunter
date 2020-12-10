@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/models/quest.dart';
 import 'package:g_sui_hunter/views/widgets/current_quest_status.dart';
-import 'package:provider/provider.dart';
-import 'package:g_sui_hunter/models/quest_model.dart';
-import 'package:g_sui_hunter/views/widgets/quest_card.dart';
+import 'package:g_sui_hunter/views/widgets/seached_quest_list.dart';
 
 class SearchQuestPage extends StatelessWidget {
   @override
@@ -16,25 +13,7 @@ class SearchQuestPage extends StatelessWidget {
         ),
         Expanded(
           flex: 9,
-          child: RefreshIndicator(
-            onRefresh: () async => context.read<QuestModel>().fetchQuest(),
-            child: Selector<QuestModel, List<Quest>>(
-              builder: (context, model, child) {
-                final questList = model.map((quest) =>
-                    QuestCard(
-                      data: quest,
-                    ),
-                ).toList();
-                return GridView.count(
-                  mainAxisSpacing: 20.0,
-                  crossAxisSpacing: 20.0,
-                  crossAxisCount: 2,
-                  children: questList,
-                );
-              },
-              selector: (context, model) => model.questList,
-            ),
-          ),
+          child: SearchedQuestList(),
         ),
       ],
     );
