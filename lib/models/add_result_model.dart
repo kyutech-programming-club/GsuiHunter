@@ -111,5 +111,8 @@ class AddResultModel extends ChangeNotifier {
       'orderNum': FieldValue.increment(1),
       'timeAve': timeAve.round(),
     });
+
+    this.clearTime = null;
+    notifyListeners();
   }
 }
