@@ -11,20 +11,27 @@ class SearchQuestModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void searchQuest(String tag) async {
-    final QuerySnapshot tagData = await FirebaseFirestore.instance
-        .collection('tags')
-        .where('name', isEqualTo: tag)
-        .limit(1)
-        .get();
-    final List<dynamic> questRefs = tagData.docs[0].data()['quests'];
-    final questList = [];
-    await Future.forEach(
-      questRefs, (questRef) async {
+  void searchQuest() async {
+    if (this.targetTag == null) {
+      final QuerySnapshot questSnapshots = await FirebaseFirestore.instance.collection('quests').orderBy('rank').get();
+      final questList = questSnapshots.docs.map((doc) => Quest(doc)).toList();
+      this.questList = questList;
+      notifyListeners();
+    } else {
+      final QuerySnapshot tagData = await FirebaseFirestore.instance
+          .collection('tags')
+          .where('name', isEqualTo: this.targetTag)
+          .limit(1)
+          .get();
+      final List<dynamic> questRefs = tagData.docs[0].data()['quests'];
+      final questList = [];
+      await Future.forEach(
+        questRefs, (questRef) async {
         final questSnapshot = await questRef.get();
         questList.add(Quest(questSnapshot));
-    },);
-    this.questList = List<Quest>.from(questList);
-    notifyListeners();
+      },);
+      this.questList = List<Quest>.from(questList);
+      notifyListeners();
+    }
   }
 }
