@@ -37,6 +37,22 @@ class HomePage extends StatelessWidget {
         ],
       ),
         body: QuestListPage(),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.kitchen),
+              label: 'クエスト',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.timeline),
+              label: 'みんなの自炊',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'マイページ',
+            ),
+          ],
+        ),
       );
     }
   }
