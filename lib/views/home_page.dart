@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/bottom_nav_model.dart';
 import 'package:g_sui_hunter/models/hunter.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
+import 'package:g_sui_hunter/views/HunterProfilePage.dart';
+import 'package:g_sui_hunter/views/ResultListPage.dart';
 import 'package:g_sui_hunter/views/quest_list_page.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +23,12 @@ class HomePage extends StatelessWidget {
         ),
       );
     } else {
+      final int currentIndex = context.select<BottomNavModel, int>((model) => model.currentIndex);
+      final List<Widget> pages = [
+        QuestListPage(),
+        ResultListPage(),
+        HunterProfilePage(),
+      ];
       return Scaffold(appBar: AppBar(
         title: Text('自炊ハンター'),
         actions: [
@@ -36,8 +45,12 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-        body: QuestListPage(),
+        body: pages[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) {
+            context.read<BottomNavModel>().switchCurrentIndex(index);
+          },
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.kitchen),
