@@ -16,5 +16,5 @@ class Hunter{
   int exp;
   DocumentReference currentQuest;
   List<dynamic> quests;
-  Map<String, int> skills;
+  Map<String, dynamic> skills;
 }
