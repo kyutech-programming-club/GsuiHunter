@@ -8,6 +8,8 @@ class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
 
+  get() => null;
+
   Future clearQuest() async {
     final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(hunter.id);
     final hunterData = await hunterRef.get();

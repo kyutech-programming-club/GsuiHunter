@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/constants.dart';
+import 'package:g_sui_hunter/models/add_result_model.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:provider/provider.dart';
@@ -14,27 +16,44 @@ class QuestListPage extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  child: ButtonTheme(
-                    minWidth: 40.0,
-                    height: 20.0,
-                    child:  RaisedButton(
-                      child: Selector<HunterModel, DocumentReference>(
-                        selector: (context, model) => model.hunter.currentQuest,
-                        builder: (context, currentQuest, child) {
-                          if (currentQuest == null) {
-                            return Text("クエスト未選択");
-                          } else {
-                            return Text("クエスト中");
-                          }
-                        },
+              Expanded(
+                flex: 2,
+                child: Row(
+                  children: [
+                    Text(context.select<HunterModel, int>((model) => model.hunter.exp).toString()),
+                    Text('/'),
+                    Text('${rankUpExpRule[context.select<HunterModel, int>((model) => model.hunter.rank)]}'),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        child: ButtonTheme(
+                          minWidth: 40.0,
+                          height: 20.0,
+                          child:  RaisedButton(
+                            child: Selector<HunterModel, DocumentReference>(
+                              selector: (context, model) => model.hunter.currentQuest,
+                              builder: (context, currentQuest, child) {
+                                if (currentQuest == null) {
+                                  return Text("クエスト未選択");
+                                } else {
+                                  return Text("クエスト中");
+                                }
+                              },
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],
@@ -47,7 +66,7 @@ class QuestListPage extends StatelessWidget {
             children: [
               Container(
                 child: Text(
-                  "GR0",
+                  "GR",
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -55,9 +74,17 @@ class QuestListPage extends StatelessWidget {
               ),
               Container(
                 child: Text(
-                  "ハンター",
+                  context.select<HunterModel, int>((model) => model.hunter.rank).toString(),
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 20
+                  ),
+                ),
+              ),
+              Container(
+                child: Text(
+                  context.select<HunterModel, String>((model) => model.hunter.name),
+                  style: TextStyle(
+                    fontSize: 30,
                   ),
                 ),
               ),
