@@ -12,10 +12,13 @@ class SearchQuestModel extends ChangeNotifier {
         .limit(1)
         .get();
     final List<dynamic> questRefs = tagData.docs[0].data()['quests'];
-    Future.forEach(
+    final questList = [];
+    await Future.forEach(
       questRefs, (questRef) async {
-        this.questList.add(Quest(await questRef.get()));
+        final questSnapshot = await questRef.get();
+        questList.add(Quest(questSnapshot));
     },);
+    this.questList = List<Quest>.from(questList);
     notifyListeners();
   }
 }
