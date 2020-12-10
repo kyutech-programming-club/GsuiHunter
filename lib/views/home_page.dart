@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
         actions: [
           CircleAvatar(
             backgroundImage: NetworkImage(
-              context.select<UserAuthModel, String>((value) => value.user.photoURL),
+              context.select<HunterModel, String>((value) => value.hunter.photoUrl),
             ),
           ),
           IconButton(
