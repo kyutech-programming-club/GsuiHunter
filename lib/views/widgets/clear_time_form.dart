@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/add_result_model.dart';
+import 'package:provider/provider.dart';
 
 class ClearTimeForm extends StatelessWidget {
   @override
@@ -21,6 +23,9 @@ class ClearTimeForm extends StatelessWidget {
               child: TextField(
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
+                onChanged: (time) {
+                  context.read<AddResultModel>().changeClearTime(int.parse(time));
+                },
               ),
             ),
           ),

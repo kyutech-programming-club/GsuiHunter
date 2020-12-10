@@ -7,6 +7,12 @@ import 'package:g_sui_hunter/constants.dart';
 class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
+  int clearTime;
+
+  void changeClearTime(int time) {
+    this.clearTime = time;
+    notifyListeners();
+  }
 
   Future clearQuest() async {
     final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(hunter.id);
