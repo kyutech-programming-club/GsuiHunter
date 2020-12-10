@@ -16,17 +16,19 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestData = await currentQuestRef.get();
 
     final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
+    final hunterSkills = _calcSkills(hunterData, currentQuestData);
 
     hunterRef.update({
       'rank' : hunterRankAndExp['rank'],
       'exp': hunterRankAndExp['exp'],
       'currentQuest': null,
       'quests': FieldValue.arrayUnion([currentQuestRef]),
-      'skills': _calcSkills(hunterData, currentQuestData),
+      'skills': hunterSkills,
     });
     hunter.currentQuest = null;
     hunter.rank = hunterRankAndExp['rank'];
     hunter.exp = hunterRankAndExp['exp'];
+    hunter.skills = hunterSkills;
     notifyListeners();
   }
 
