@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
+import 'package:g_sui_hunter/views/widgets/current_quest_status.dart';
 import 'package:provider/provider.dart';
 import 'package:g_sui_hunter/models/quest_model.dart';
 import 'package:g_sui_hunter/views/widgets/quest_card.dart';
@@ -13,32 +12,7 @@ class SearchQuestPage extends StatelessWidget {
       children: [
         Expanded(
           flex: 1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  child: ButtonTheme(
-                    minWidth: 40.0,
-                    height: 20.0,
-                    child:  RaisedButton(
-                      child: Selector<HunterModel, DocumentReference>(
-                        selector: (context, model) => model.hunter.currentQuest,
-                        builder: (context, currentQuest, child) {
-                          if (currentQuest == null) {
-                            return Text("クエスト未選択");
-                          } else {
-                            return Text("クエスト中");
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          child: CurrentQuestStatus(),
         ),
         Expanded(
           flex: 9,
