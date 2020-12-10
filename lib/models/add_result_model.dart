@@ -21,6 +21,8 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestRef = hunterData.data()['currentQuest'];
     final currentQuestData = await currentQuestRef.get();
 
+    _updateCurrentQuestData(currentQuestData);
+
     final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
     final hunterSkills = _calcSkills(hunterData, currentQuestData);
 
@@ -96,5 +98,18 @@ class AddResultModel extends ChangeNotifier {
       });
     }
     return skills;
+  }
+
+  Future _updateCurrentQuestData(DocumentSnapshot currentQuestData) async {
+    final int preTimeAve = currentQuestData.data()['timeAve'];
+    final int preOrderNum = currentQuestData.data()['orderNum'];
+
+    final timeAve = (preTimeAve * preOrderNum + this.clearTime) / (preOrderNum + 1);
+
+    await FirebaseFirestore.instance.collection('quests').doc(currentQuestData.id)
+        .update({
+      'orderNum': FieldValue.increment(1),
+      'timeAve': timeAve.round(),
+    });
   }
 }
