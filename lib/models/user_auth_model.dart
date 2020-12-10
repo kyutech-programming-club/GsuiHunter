@@ -28,11 +28,13 @@ class UserAuthModel extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      this.isSignInWaiting = false;
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (error) {
+      this.isSignInWaiting = false;
+      notifyListeners();
       print(error);
     }
+    this.isSignInWaiting = false;
   }
 
   Future signOut() async {
