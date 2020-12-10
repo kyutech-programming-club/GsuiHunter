@@ -24,7 +24,7 @@ class ClearTimeForm extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 onChanged: (time) {
-                  context.read<AddResultModel>().changeClearTime(int.parse(time));
+                  context.read<AddResultModel>().changeClearTime(int.tryParse(time));
                 },
               ),
             ),
