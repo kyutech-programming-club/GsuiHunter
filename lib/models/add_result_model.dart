@@ -7,6 +7,12 @@ import 'package:g_sui_hunter/constants.dart';
 class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
+  int clearTime;
+
+  void changeClearTime(int time) {
+    this.clearTime = time;
+    notifyListeners();
+  }
 
   Future clearQuest() async {
     final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(hunter.id);
@@ -14,6 +20,9 @@ class AddResultModel extends ChangeNotifier {
 
     final currentQuestRef = hunterData.data()['currentQuest'];
     final currentQuestData = await currentQuestRef.get();
+
+    _updateCurrentQuestData(currentQuestData);
+    _updateTagData(currentQuestRef, currentQuestData);
 
     final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
     final hunterSkills = _calcSkills(hunterData, currentQuestData);
@@ -90,5 +99,40 @@ class AddResultModel extends ChangeNotifier {
       });
     }
     return skills;
+  }
+
+  Future _updateCurrentQuestData(DocumentSnapshot currentQuestData) async {
+    final int preTimeAve = currentQuestData.data()['timeAve'];
+    final int preOrderNum = currentQuestData.data()['orderNum'];
+
+    final timeAve = (preTimeAve * preOrderNum + this.clearTime) / (preOrderNum + 1);
+
+    await FirebaseFirestore.instance.collection('quests').doc(currentQuestData.id)
+        .update({
+      'orderNum': FieldValue.increment(1),
+      'timeAve': timeAve.round(),
+    });
+
+    this.clearTime = null;
+    notifyListeners();
+  }
+
+  Future _updateTagData(DocumentReference currentQuestRef, DocumentSnapshot currentQuestData) async {
+    final currentQuestTagList = currentQuestData.data()['tags'];
+    Future.forEach(
+        currentQuestTagList, (tag) async {
+      FirebaseFirestore.instance.collection('tags')
+          .where('name', isEqualTo: tag)
+          .limit(1)
+          .get()
+          .then((snapshot) {
+        final tagId = snapshot.docs.first.id;
+        FirebaseFirestore.instance.collection('tags')
+            .doc(tagId)
+            .update({
+          'quests': FieldValue.arrayUnion([currentQuestRef]),
+        });
+      });
+    });
   }
 }
