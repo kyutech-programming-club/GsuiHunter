@@ -5,7 +5,7 @@ import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
-import 'package:g_sui_hunter/views/HunterProfilePage.dart';
+import 'package:g_sui_hunter/views/search_quest_page.dart';
 import 'package:g_sui_hunter/views/result_list_page.dart';
 import 'package:g_sui_hunter/views/quest_list_page.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +26,8 @@ class HomePage extends StatelessWidget {
       final int currentIndex = context.select<BottomNavModel, int>((model) => model.currentIndex);
       final List<Widget> pages = [
         QuestListPage(),
+        SearchQuestPage(),
         ResultListPage(),
-        HunterProfilePage(),
       ];
       return Scaffold(appBar: AppBar(
         title: Text('自炊ハンター'),
@@ -57,12 +57,12 @@ class HomePage extends StatelessWidget {
               label: 'クエスト',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.timeline),
-              label: 'みんなの自炊',
+              icon: Icon(Icons.search),
+              label: 'サーチ',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'マイページ',
+              icon: Icon(Icons.timeline),
+              label: 'みんなの自炊',
             ),
           ],
         ),
