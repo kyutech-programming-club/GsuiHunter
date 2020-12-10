@@ -15,7 +15,7 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestRef = hunterData.data()['currentQuest'];
     final currentQuestData = await currentQuestRef.get();
 
-    final hunterRank = await _calcRank(hunterData, currentQuestData);
+    final hunterRank = _calcRank(hunterData, currentQuestData);
 
     hunterRef.update({
       'currentQuest': null,
@@ -36,15 +36,15 @@ class AddResultModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future _calcRank(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) async {
-    final int preRank = await hunterData.data()['rank'];
+  int _calcRank(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
+    final int preRank = hunterData.data()['rank'];
 
     if (preRank == 5) {
       return preRank;
     }
 
     final int rankUpExp = rankUpExpRule[preRank];
-    final int preExp = await hunterData.data()['exp'];
+    final int preExp = hunterData.data()['exp'];
 
     if (rankUpExp <= preExp + preRank*10) {
       return preRank + 1;
