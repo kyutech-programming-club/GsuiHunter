@@ -6,7 +6,7 @@ import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
 import 'package:g_sui_hunter/views/HunterProfilePage.dart';
-import 'package:g_sui_hunter/views/ResultListPage.dart';
+import 'package:g_sui_hunter/views/result_list_page.dart';
 import 'package:g_sui_hunter/views/quest_list_page.dart';
 import 'package:provider/provider.dart';
 
