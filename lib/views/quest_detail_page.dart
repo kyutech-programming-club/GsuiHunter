@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:g_sui_hunter/models/quest.dart';
@@ -76,7 +77,28 @@ class QuestDetailPage extends StatelessWidget {
               if (currentQuest != null) {
                 if (currentQuest.id == data.id) {
                   return FlatButton(
-                    onPressed: () => context.read<HunterModel>().clearQuest(),
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CupertinoAlertDialog(
+                          title: Text('ナイス自炊！'),
+                          content: Text('結果を報告して自炊ポイントをGet'),
+                          actions: [
+                            CupertinoDialogAction(
+                              child: Text('キャンセル'),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                            CupertinoDialogAction(
+                              child: Text('Get！'),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                await Navigator.pushNamed(context, '/add_result');
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                     color: Colors.greenAccent,
                     child: Text(
                       'クリアする',
@@ -85,7 +107,6 @@ class QuestDetailPage extends StatelessWidget {
                 } else {
                   return FlatButton(
                     onPressed: () async {
-                      Navigator.pop(context);
                       final currentQuestData =  Quest(await currentQuest.get());
                       await Navigator.push(
                         context,
@@ -93,6 +114,7 @@ class QuestDetailPage extends StatelessWidget {
                           builder: (context) => QuestDetailPage(data: currentQuestData),
                         ),
                       );
+                      Navigator.pop(context);
                     },
                     color: Colors.grey,
                     child: Text(

@@ -36,15 +36,9 @@ class HunterModel extends ChangeNotifier {
     final questRef = FirebaseFirestore.instance.collection('quests').doc(data.id);
 
     hunter.currentQuest  = questRef;
-    if (hunter.quests == null) {
-      hunter.quests = [questRef];
-    } else {
-      hunter.quests.add(questRef);
-    }
     notifyListeners();
     hunterRef.update({
       'currentQuest': questRef,
-      'quests': FieldValue.arrayUnion(hunter.quests),
     })
         .then((value) => notifyListeners())
         .catchError((error) => print("Failed to order quest: $error"));
