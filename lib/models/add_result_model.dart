@@ -22,6 +22,7 @@ class AddResultModel extends ChangeNotifier {
       'exp': hunterRankAndExp['exp'],
       'currentQuest': null,
       'quests': FieldValue.arrayUnion([currentQuestRef]),
+      'skills': _calcSkills(hunterData, currentQuestData),
     });
     hunter.currentQuest = null;
     hunter.rank = hunterRankAndExp['rank'];
@@ -67,4 +68,25 @@ class AddResultModel extends ChangeNotifier {
     }
   }
 
+  Map<String, int> _calcSkills(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
+    Map<String, int> skills = {};
+    final List<dynamic> questTags = currentQuestData.data()['tags'];
+
+    final preSkills = hunterData.data()['skills'];
+    if (preSkills == null) {
+      questTags.forEach((tag) {
+        skills[tag] = 1;
+      });
+    } else {
+      skills = Map<String, int>.from(preSkills);
+      questTags.forEach((tag) {
+        if (skills[tag] == null) {
+          skills[tag] = 1;
+        } else {
+          skills[tag] += 1;
+        }
+      });
+    }
+    return skills;
+  }
 }
