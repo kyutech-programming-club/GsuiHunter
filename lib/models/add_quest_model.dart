@@ -42,6 +42,7 @@ class AddQuestModel extends ChangeNotifier {
       'siteUrl': '',
       'imageUrl': '',
       'rank': int.parse(this.groupValue),
+      'orderNum': 0,
       'timeAve': 0,
       'tags': _tags.toList(),
     });
