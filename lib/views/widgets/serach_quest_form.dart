@@ -17,7 +17,10 @@ class SearchQuestForm extends StatelessWidget {
           child: Text(tag.name),
         );
       }).toList(),
-      onChanged: (tag) => context.read<SearchQuestModel>().changeTargetTag(tag),
+      onChanged: (tag) {
+        context.read<SearchQuestModel>().changeTargetTag(tag);
+        context.read<SearchQuestModel>().searchQuest();
+      },
     );
   }
 }
