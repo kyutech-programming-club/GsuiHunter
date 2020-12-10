@@ -4,6 +4,12 @@ import 'package:g_sui_hunter/models/quest.dart';
 
 class SearchQuestModel extends ChangeNotifier {
   List<Quest> questList = [];
+  String targetTag;
+
+  void changeTargetTag(tag) {
+    this.targetTag = tag;
+    notifyListeners();
+  }
 
   void searchQuest(String tag) async {
     final QuerySnapshot tagData = await FirebaseFirestore.instance
