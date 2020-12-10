@@ -24,6 +24,8 @@ class AddResultModel extends ChangeNotifier {
       'quests': FieldValue.arrayUnion([currentQuestRef]),
     });
     hunter.currentQuest = null;
+    hunter.rank = hunterRankAndExp['rank'];
+    hunter.exp = hunterRankAndExp['exp'];
     notifyListeners();
   }
 
