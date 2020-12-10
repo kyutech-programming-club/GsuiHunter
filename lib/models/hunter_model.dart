@@ -18,6 +18,7 @@ class HunterModel extends ChangeNotifier {
     } else {
       hunterRef.set({
         'name': currentUser.displayName,
+        'photoUrl': currentUser.photoURL,
         'rank': 1,
         'exp': 0,
         'currentQuest': null,
