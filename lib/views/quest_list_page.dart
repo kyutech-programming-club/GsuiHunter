@@ -18,17 +18,50 @@ class QuestListPage extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
+                flex: 1,
+                child: Text(
+                    '${context.select<HunterModel, int>((model) => model.hunter.exp)}'
+                        + '/'
+                        + '${rankUpExpRule[context.select<HunterModel, int>((model) => model.hunter.rank)]}'
+                ),
+              ),
+              Expanded(
                 flex: 2,
-                child: Row(
+                child: Stack(
                   children: [
-                    Text(context.select<HunterModel, int>((model) => model.hunter.exp).toString()),
-                    Text('/'),
-                    Text('${rankUpExpRule[context.select<HunterModel, int>((model) => model.hunter.rank)]}'),
+                    ClipRRect(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(50.0),
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints){
+                          return Container(
+                            color: Colors.black,
+                            height: constraints.maxHeight*0.2,
+                          );
+                        },
+                      ),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50.0),
+                        bottomLeft: Radius.circular(50.0),
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints){
+                          return Container(
+                            color: Colors.orangeAccent,
+                            height: constraints.maxHeight*0.2,
+                            width: constraints.maxWidth*0.5,
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -76,7 +109,7 @@ class QuestListPage extends StatelessWidget {
                 child: Text(
                   context.select<HunterModel, int>((model) => model.hunter.rank).toString(),
                   style: TextStyle(
-                    fontSize: 20
+                      fontSize: 20
                   ),
                 ),
               ),
