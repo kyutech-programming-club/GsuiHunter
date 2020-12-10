@@ -12,10 +12,12 @@ class AddResultModel extends ChangeNotifier {
     final hunterData = await hunterRef.get();
 
     final currentQuestRef = hunterData.data()['currentQuest'];
+    final currentQuestData = await currentQuestRef.get();
 
     hunterRef.update({
       'currentQuest': null,
       'quests': FieldValue.arrayUnion([currentQuestRef]),
+      'exp': FieldValue.increment(currentQuestData.data()['rank']*10)
     });
     hunter.currentQuest = null;
     notifyListeners();
