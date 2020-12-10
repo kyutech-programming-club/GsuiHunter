@@ -8,9 +8,15 @@ class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
   int clearTime;
+  String clearComment;
 
   void changeClearTime(int time) {
     this.clearTime = time;
+    notifyListeners();
+  }
+
+  void changeClearComment(String comment) {
+    this.clearComment = comment;
     notifyListeners();
   }
 
@@ -23,6 +29,7 @@ class AddResultModel extends ChangeNotifier {
 
     _updateCurrentQuestData(currentQuestData);
     _updateTagData(currentQuestRef, currentQuestData);
+    _addResult(hunterRef, currentQuestRef);
 
     final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
     final hunterSkills = _calcSkills(hunterData, currentQuestData);
@@ -114,7 +121,6 @@ class AddResultModel extends ChangeNotifier {
     });
 
     this.clearTime = null;
-    notifyListeners();
   }
 
   Future _updateTagData(DocumentReference currentQuestRef, DocumentSnapshot currentQuestData) async {
@@ -134,5 +140,16 @@ class AddResultModel extends ChangeNotifier {
         });
       });
     });
+  }
+
+  Future _addResult(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
+    await FirebaseFirestore.instance.collection('results').add({
+      'hunterRef': hunterRef,
+      'questRef': currentQuestRef,
+      'comment': this.clearComment,
+      'clearedAt': FieldValue.serverTimestamp(),
+    })
+        .then((value) => print("New Result Added"))
+        .catchError((error) => print("Failed to add result: $error"));
   }
 }

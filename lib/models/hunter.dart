@@ -4,6 +4,7 @@ class Hunter{
   Hunter(DocumentSnapshot doc){
     this.id = doc.id;
     this.name = doc.data()['name'];
+    this.photoUrl = doc.data()['photoUrl'];
     this.rank = doc.data()['rank'];
     this.exp = doc.data()['exp'];
     this.currentQuest = doc.data()['currentQuest'];
@@ -12,6 +13,7 @@ class Hunter{
   }
   String id;
   String name;
+  String photoUrl;
   int rank;
   int exp;
   DocumentReference currentQuest;
