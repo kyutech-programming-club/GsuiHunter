@@ -15,6 +15,7 @@ class HunterModel extends ChangeNotifier {
     if (hunterSnapshot.exists) {
       this.hunter = Hunter(hunterSnapshot);
       print("Welcome back");
+      notifyListeners();
     } else {
       hunterRef.set({
         'name': currentUser.displayName,
@@ -26,10 +27,10 @@ class HunterModel extends ChangeNotifier {
           .then((value) async {
         this.hunter = Hunter(await hunterRef.get());
         print("New Hunter Added");
+        notifyListeners();
       })
           .catchError((error) => print("Failed to add hunter: $error"));
     }
-    notifyListeners();
   }
 
   Future orderQuest(Quest data) async {
