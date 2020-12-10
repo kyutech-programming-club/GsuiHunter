@@ -22,6 +22,7 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestData = await currentQuestRef.get();
 
     _updateCurrentQuestData(currentQuestData);
+    _updateTagData(currentQuestRef, currentQuestData);
 
     final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
     final hunterSkills = _calcSkills(hunterData, currentQuestData);
@@ -114,5 +115,24 @@ class AddResultModel extends ChangeNotifier {
 
     this.clearTime = null;
     notifyListeners();
+  }
+
+  Future _updateTagData(DocumentReference currentQuestRef, DocumentSnapshot currentQuestData) async {
+    final currentQuestTagList = currentQuestData.data()['tags'];
+    Future.forEach(
+        currentQuestTagList, (tag) async {
+      FirebaseFirestore.instance.collection('tags')
+          .where('name', isEqualTo: tag)
+          .limit(1)
+          .get()
+          .then((snapshot) {
+        final tagId = snapshot.docs.first.id;
+        FirebaseFirestore.instance.collection('tags')
+            .doc(tagId)
+            .update({
+          'quests': FieldValue.arrayUnion([currentQuestRef]),
+        });
+      });
+    });
   }
 }
