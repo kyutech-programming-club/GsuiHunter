@@ -8,9 +8,15 @@ class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
   int clearTime;
+  String clearComment;
 
   void changeClearTime(int time) {
     this.clearTime = time;
+    notifyListeners();
+  }
+
+  void changeClearComment(String comment) {
+    this.clearComment = comment;
     notifyListeners();
   }
 
