@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:g_sui_hunter/models/add_result_model.dart';
+import 'package:provider/provider.dart';
 
 class ClearCommentForm extends StatelessWidget {
   @override
@@ -16,6 +18,9 @@ class ClearCommentForm extends StatelessWidget {
               hintText: 'クリアのコツや感想を教えてください',
               border: OutlineInputBorder(),
             ),
+            onChanged: (comment) {
+              context.read<AddResultModel>().changeClearComment(comment);
+            },
           ),
         ],
       ),
