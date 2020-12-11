@@ -17,7 +17,6 @@ class SearchHunterModel extends ChangeNotifier {
 
   void changeTargetHunterName(name) {
     this.targetHunterName = name;
-    notifyListeners();
   }
 
   void searchQuest() async {

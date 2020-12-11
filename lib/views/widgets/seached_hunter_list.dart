@@ -10,10 +10,8 @@ class SearchedHunterList extends StatelessWidget {
     return Selector<SearchHunterModel, Tuple2<List<Hunter>, String>>(
       selector: (context, model) => Tuple2(model.hunterList, model.targetHunterName),
       builder: (context, model, child) {
-        if (model.item1.isEmpty && model.item2.isEmpty) {
-          return Container(
-            color: Colors.red,
-          );
+        if (model.item2.isEmpty) {
+          return Container();
         } else if (model.item1.isEmpty && model.item2.isNotEmpty) {
           return Text('見つかりませんでした');
         } else {
