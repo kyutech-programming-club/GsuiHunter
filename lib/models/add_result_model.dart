@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/hunter.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:g_sui_hunter/constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
   int clearTime;
   String clearComment = '';
+  final picker = ImagePicker();
+  File takenImage;
 
   void changeClearTime(int time) {
     this.clearTime = time;
@@ -17,6 +21,12 @@ class AddResultModel extends ChangeNotifier {
 
   void changeClearComment(String comment) {
     this.clearComment = comment;
+    notifyListeners();
+  }
+
+  void imagePicker() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    this.takenImage = File(pickedFile.path);
     notifyListeners();
   }
 

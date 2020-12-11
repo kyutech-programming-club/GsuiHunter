@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:g_sui_hunter/models/add_result_model.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class ClearQuestImage extends StatelessWidget {
   @override
@@ -26,14 +28,18 @@ class ClearQuestImage extends StatelessWidget {
           alignment: Alignment.center,
           child: FittedBox(
             fit: BoxFit.contain,
-            child: Selector<AddResultModel, String>(
-              selector: (context, model) => model.currentQuest.imageUrl,
-              builder: (context, imageUrl, child) {
-                return CachedNetworkImage(
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  imageUrl: imageUrl,
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                );
+            child: Selector<AddResultModel, Tuple2<String, File>>(
+              selector: (context, model) => Tuple2(model.currentQuest.imageUrl, model.takenImage),
+              builder: (context, model, child) {
+                if (model.item2 == null) {
+                  return CachedNetworkImage(
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    imageUrl: model.item1,
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  );
+                } else {
+                  return Image.file(model.item2);
+                }
               },
             ),
           ),
