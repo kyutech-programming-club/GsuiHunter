@@ -18,7 +18,7 @@ class SearchQuestPage extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: SearchQuestForm(),
+            child: SearchHunterForm(),
           ),
           Expanded(
             flex: 7,

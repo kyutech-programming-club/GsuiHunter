@@ -4,7 +4,7 @@ import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:provider/provider.dart';
 
-class SearchQuestForm extends StatelessWidget {
+class SearchHunterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tagList = context.select<TagModel, List<Tag>>((model) => model.tagList);
