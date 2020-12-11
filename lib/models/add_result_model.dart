@@ -29,7 +29,7 @@ class AddResultModel extends ChangeNotifier {
 
     await _updateCurrentQuestData();
     await _updateTagData();
-    await _addResult(hunterRef, currentQuestRef);
+    await _addResult();
 
     final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
     final hunterSkills = _calcSkills(hunterData, currentQuestData);
@@ -136,10 +136,10 @@ class AddResultModel extends ChangeNotifier {
     });
   }
 
-  Future _addResult(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
+  Future _addResult() async {
     await FirebaseFirestore.instance.collection('results').add({
-      'hunterRef': hunterRef,
-      'questRef': currentQuestRef,
+      'hunterRef': FirebaseFirestore.instance.collection('hunters').doc(this.hunter.id),
+      'questRef': FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id),
       'comment': this.clearComment,
       'clearedAt': FieldValue.serverTimestamp(),
     })
