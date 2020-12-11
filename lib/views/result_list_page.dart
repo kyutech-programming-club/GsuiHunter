@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/result.dart';
 import 'package:g_sui_hunter/models/result_model.dart';
 import 'package:g_sui_hunter/views/widgets/current_quest_status.dart';
+import 'package:g_sui_hunter/views/widgets/result_card.dart';
 import 'package:provider/provider.dart';
 
 class ResultListPage extends StatelessWidget {
@@ -21,14 +22,11 @@ class ResultListPage extends StatelessWidget {
               selector: (context, model) => model.resultList,
               builder: (context, model, child) {
                 final resultList = model.map((result) =>
-                    Text(
-                      result.comment,
+                    ResultCard(
+                      result: result,
                     ),
                 ).toList();
-                return GridView.count(
-                  mainAxisSpacing: 20.0,
-                  crossAxisSpacing: 20.0,
-                  crossAxisCount: 1,
+                return ListView(
                   children: resultList,
                 );
               },
