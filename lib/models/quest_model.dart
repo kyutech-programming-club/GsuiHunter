@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class QuestModel extends ChangeNotifier {
   List<Quest> questList = [];
 
-  void fetchQuest() async {
+  Future fetchQuest() async {
     final QuerySnapshot questSnapshots = await FirebaseFirestore.instance.collection('quests').orderBy('rank').get();
     final questList = questSnapshots.docs.map((doc) => Quest(doc)).toList();
     this.questList = questList;
