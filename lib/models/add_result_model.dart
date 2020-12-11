@@ -138,6 +138,7 @@ class AddResultModel extends ChangeNotifier {
     await FirebaseFirestore.instance.collection('results').add({
       'hunterRef': hunterRef,
       'questRef': currentQuestRef,
+      'time': this.clearTime,
       'comment': this.clearComment,
       'clearedAt': FieldValue.serverTimestamp(),
     })
