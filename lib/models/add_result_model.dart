@@ -31,7 +31,7 @@ class AddResultModel extends ChangeNotifier {
     await _updateTagData();
     await _addResult();
 
-    final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
+    final hunterRankAndExp = _calcRankAndExp();
     final hunterSkills = _calcSkills(hunterData, currentQuestData);
 
     hunterRef.update({
@@ -52,9 +52,9 @@ class AddResultModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, int> _calcRankAndExp(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
-    final int preRank = hunterData.data()['rank'];
-    final int questRank = currentQuestData.data()['rank'];
+  Map<String, int> _calcRankAndExp() {
+    final int preRank = this.hunter.rank;
+    final int questRank = this.currentQuest.rank;
 
     if (preRank == 5) {
       return {
@@ -64,7 +64,7 @@ class AddResultModel extends ChangeNotifier {
     }
 
     final int rankUpExp = rankUpExpRule[preRank];
-    final int preExp = hunterData.data()['exp'];
+    final int preExp = this.hunter.exp;
 
     final bool isRankUp = (rankUpExp <= preExp + questRank*10);
     if (isRankUp) {
