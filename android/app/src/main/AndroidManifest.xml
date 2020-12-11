@@ -8,7 +8,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="g_sui_hunter"
-        android:icon="@mipmap/g_sui_icon">
+        android:icon="@mipmap/g_sui_icon"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

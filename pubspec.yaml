@@ -21,6 +21,7 @@ dependencies:
   cached_network_image: ^2.4.1
   auto_size_text: ^2.1.0
   tuple: ^1.0.3
+  image_picker: ^0.6.7+15
 
 dev_dependencies:
   flutter_test:
