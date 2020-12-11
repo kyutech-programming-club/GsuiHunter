@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/bottom_nav_model.dart';
 import 'package:g_sui_hunter/models/hunter.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
-import 'package:g_sui_hunter/models/result.dart';
-import 'package:g_sui_hunter/models/result_model.dart';
 import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';

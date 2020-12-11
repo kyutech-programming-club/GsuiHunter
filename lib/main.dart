@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:g_sui_hunter/models/bottom_nav_model.dart';
-import 'package:g_sui_hunter/models/result_model.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
