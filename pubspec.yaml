@@ -23,6 +23,7 @@ dependencies:
   auto_size_text: ^2.1.0
   tuple: ^1.0.3
   image_picker: ^0.6.7+15
+  assets_audio_player: ^2.0.13+1
 
 dev_dependencies:
   flutter_test:
