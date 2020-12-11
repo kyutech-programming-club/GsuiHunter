@@ -9,7 +9,7 @@ class SearchQuestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SearchHunterModel>(
-      create: (context) => SearchHunterModel()..searchQuest(),
+      create: (context) => SearchHunterModel(),
       child: Column(
         children: [
           Expanded(
