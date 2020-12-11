@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/result.dart';
 import 'package:g_sui_hunter/views/widgets/result_card_header.dart';
+import 'package:g_sui_hunter/views/widgets/result_card_image.dart';
 
 class ResultCard extends StatelessWidget {
   const ResultCard({
@@ -37,8 +38,8 @@ class ResultCard extends StatelessWidget {
               ),
               Expanded(
                 flex: 13,
-                child: Container(
-                  color: Colors.green,
+                child: ResultCardImage(
+                  result: result,
                 ),
               ),
               Expanded(
