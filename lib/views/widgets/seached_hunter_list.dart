@@ -1,6 +1,6 @@
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/models/search_quest_model.dart';
+import 'package:g_sui_hunter/models/search_hunter_model.dart';
 import 'package:provider/provider.dart';
 import 'package:g_sui_hunter/models/quest_model.dart';
 import 'package:g_sui_hunter/views/widgets/quest_card.dart';

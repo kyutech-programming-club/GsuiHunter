@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/models/search_quest_model.dart';
+import 'package:g_sui_hunter/models/search_hunter_model.dart';
 import 'package:g_sui_hunter/views/widgets/current_quest_status.dart';
-import 'package:g_sui_hunter/views/widgets/seached_quest_list.dart';
-import 'package:g_sui_hunter/views/widgets/serach_quest_form.dart';
+import 'package:g_sui_hunter/views/widgets/seached_hunter_list.dart';
+import 'package:g_sui_hunter/views/widgets/serach_hunter_form.dart';
 import 'package:provider/provider.dart';
 
 class SearchQuestPage extends StatelessWidget {

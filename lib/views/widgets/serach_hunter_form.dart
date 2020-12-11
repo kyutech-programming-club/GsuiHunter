@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:g_sui_hunter/models/search_quest_model.dart';
+import 'package:g_sui_hunter/models/search_hunter_model.dart';
 import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:provider/provider.dart';
