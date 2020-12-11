@@ -22,7 +22,7 @@ class SearchQuestPage extends StatelessWidget {
           ),
           Expanded(
             flex: 7,
-            child: SearchedQuestList(),
+            child: SearchedHunterList(),
           ),
         ],
       ),

@@ -4,7 +4,7 @@ import 'package:g_sui_hunter/models/search_hunter_model.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
-class SearchedQuestList extends StatelessWidget {
+class SearchedHunterList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Selector<SearchHunterModel, Tuple2<List<Hunter>, String>>(
