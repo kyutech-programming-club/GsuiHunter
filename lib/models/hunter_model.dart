@@ -57,4 +57,14 @@ class HunterModel extends ChangeNotifier {
     hunter.currentQuest = null;
     notifyListeners();
   }
+
+  Future followHunter(DocumentReference targetHunter) async {
+    final hunterRef = FirebaseFirestore.instance
+        .collection('hunters').doc(this.hunter.id);
+    hunterRef.update({
+      'followee': FieldValue.arrayUnion([targetHunter]),
+    })
+        .then((value) => print('Follow new hunter'))
+        .catchError((error) => print("Failed to follow hunter: $error"));
+  }
 }
