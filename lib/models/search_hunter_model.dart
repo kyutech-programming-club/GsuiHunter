@@ -54,8 +54,13 @@ class SearchHunterModel extends ChangeNotifier {
         .collection('hunters')
         .where('name', isEqualTo: this.targetHunterName)
         .get();
-   final hunterList = snapshots.docs.map((doc) => Hunter(doc)).toList();
-   this.hunterList = hunterList;
-   notifyListeners();
+    if (snapshots.docs.isEmpty) {
+      this.hunterList = [];
+      notifyListeners();
+    } else {
+      final hunterList = snapshots.docs.map((doc) => Hunter(doc)).toList();
+      this.hunterList = hunterList;
+      notifyListeners();
+    }
   }
 }
