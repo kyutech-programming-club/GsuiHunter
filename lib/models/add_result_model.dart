@@ -25,9 +25,9 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestRef = FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id);
 
     await _updateHunterData(hunterRef, currentQuestRef);
-    await _updateCurrentQuestData();
-    await _updateTagData();
-    await _addResultData();
+    await _updateCurrentQuestData(currentQuestRef);
+    await _updateTagData(currentQuestRef);
+    await _addResultData(hunterRef, currentQuestRef);
   }
 
   Future createState(Hunter hunter) async {
@@ -103,22 +103,20 @@ class AddResultModel extends ChangeNotifier {
     return skills;
   }
 
-  Future _updateCurrentQuestData() async {
+  Future _updateCurrentQuestData(DocumentReference currentQuestRef) async {
     final int preTimeAve = this.currentQuest.timeAve;
     final int preOrderNum = this.currentQuest.orderNum;
 
     final timeAve = (preTimeAve * preOrderNum + this.clearTime) / (preOrderNum + 1);
 
-    await FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id)
-        .update({
+    await currentQuestRef.update({
       'orderNum': FieldValue.increment(1),
       'timeAve': timeAve.round(),
     });
   }
 
-  Future _updateTagData() async {
+  Future _updateTagData(DocumentReference currentQuestRef) async {
     final currentQuestTagList = this.currentQuest.tags;
-    final currentQuestRef = FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id);
     Future.forEach(
         currentQuestTagList, (tag) async {
       FirebaseFirestore.instance.collection('tags')
@@ -136,10 +134,10 @@ class AddResultModel extends ChangeNotifier {
     });
   }
 
-  Future _addResultData() async {
+  Future _addResultData(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
     await FirebaseFirestore.instance.collection('results').add({
-      'hunterRef': FirebaseFirestore.instance.collection('hunters').doc(this.hunter.id),
-      'questRef': FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id),
+      'hunterRef': hunterRef,
+      'questRef': currentQuestRef,
       'comment': this.clearComment,
       'clearedAt': FieldValue.serverTimestamp(),
     })
