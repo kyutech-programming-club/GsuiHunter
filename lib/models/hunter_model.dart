@@ -66,5 +66,9 @@ class HunterModel extends ChangeNotifier {
     })
         .then((value) => print('Follow new hunter'))
         .catchError((error) => print("Failed to follow hunter: $error"));
+    this.hunter.followee == null ?
+    this.hunter.followee = [targetHunter] :
+    this.hunter.followee.add(targetHunter);
+    notifyListeners();
   }
 }
