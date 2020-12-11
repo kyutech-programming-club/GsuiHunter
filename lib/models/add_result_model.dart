@@ -27,9 +27,9 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestRef = hunterData.data()['currentQuest'];
     final currentQuestData = await currentQuestRef.get();
 
-    _updateCurrentQuestData(currentQuestData);
-    _updateTagData(currentQuestRef, currentQuestData);
-    _addResult(hunterRef, currentQuestRef);
+    await _updateCurrentQuestData(currentQuestData);
+    await _updateTagData(currentQuestRef, currentQuestData);
+    await _addResult(hunterRef, currentQuestRef);
 
     final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
     final hunterSkills = _calcSkills(hunterData, currentQuestData);
