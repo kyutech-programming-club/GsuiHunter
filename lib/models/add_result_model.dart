@@ -21,11 +21,8 @@ class AddResultModel extends ChangeNotifier {
   }
 
   Future clearQuest() async {
-    final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(hunter.id);
-    final hunterData = await hunterRef.get();
-
-    final currentQuestRef = hunterData.data()['currentQuest'];
-    final currentQuestData = await currentQuestRef.get();
+    final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(this.hunter.id);
+    final currentQuestRef = FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id);
 
     await _updateCurrentQuestData();
     await _updateTagData();
