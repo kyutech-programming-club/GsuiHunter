@@ -6,6 +6,7 @@ import 'package:g_sui_hunter/models/quest.dart';
 import 'package:decoratable_text/decoratable_text.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class QuestDetailPage extends StatelessWidget {
   const QuestDetailPage({
@@ -124,7 +125,13 @@ class QuestDetailPage extends StatelessWidget {
                 }
               } else {
                 return FlatButton(
-                  onPressed: () => context.read<HunterModel>().orderQuest(data),
+                  onPressed: () {
+                    final assetsAudioPlayer = AssetsAudioPlayer();
+                    assetsAudioPlayer.open(
+                      Audio("assets/audio/wadodon.mp3",),
+                    );
+                    context.read<HunterModel>().orderQuest(data);
+                  },
                   color: Theme.of(context).primaryColor,
                   child: Text(
                     'クエスト登録',

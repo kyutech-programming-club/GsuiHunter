@@ -6,6 +6,7 @@ import 'package:g_sui_hunter/models/quest_model.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class ClearQuestButton extends StatelessWidget {
   @override
@@ -52,6 +53,10 @@ class ClearQuestButton extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
+                final assetsAudioPlayer = AssetsAudioPlayer();
+                assetsAudioPlayer.open(
+                  Audio("assets/audio/tousen.mp3",),
+                );
                 await context.read<AddResultModel>().clearQuest();
                 context.read<HunterModel>().fetchHunter();
                 context.read<QuestModel>().fetchQuest();
