@@ -52,7 +52,9 @@ class QuestListPage extends StatelessWidget {
                           return Container(
                             color: Colors.orangeAccent,
                             height: constraints.maxHeight*0.2,
-                            width: constraints.maxWidth*0.5,
+                            width: constraints.maxWidth
+                                *context.select<HunterModel, int>((model) => model.hunter.exp )
+                                /rankUpExpRule[context.select<HunterModel, int>((model) => model.hunter.rank)],
                           );
                         },
                       ),
