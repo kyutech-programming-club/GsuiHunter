@@ -21,7 +21,7 @@ class ResultCardImage extends StatelessWidget {
       child: Center(
         child: CachedNetworkImage(
           placeholder: (context, url) => CircularProgressIndicator(),
-          imageUrl: result.quest.imageUrl,
+          imageUrl: result.resultImageUrl !=  null ? result.resultImageUrl : result.quest.imageUrl,
           errorWidget: (context, url, error) => Icon(Icons.error),
         ),
       ),
