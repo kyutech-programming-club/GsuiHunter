@@ -7,6 +7,7 @@ class Result {
     this.id = doc.id;
     this.hunter = hunter;
     this.quest = quest;
+    this.resultImageUrl = doc.data()['resultImageUrl'];
     this.time = doc.data()['time'];
     this.comment = doc.data()['comment'];
     this.clearedAt = doc.data()['clearedAt'].toDate();
@@ -16,6 +17,7 @@ class Result {
   String id;
   Hunter hunter;
   Quest quest;
+  String resultImageUrl;
   int time;
   String comment;
   DateTime clearedAt;

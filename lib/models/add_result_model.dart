@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/hunter.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 import 'package:g_sui_hunter/constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
   int clearTime;
   String clearComment = '';
+  final picker = ImagePicker();
+  File pickedImage;
 
   void changeClearTime(int time) {
     this.clearTime = time;
@@ -17,6 +22,18 @@ class AddResultModel extends ChangeNotifier {
 
   void changeClearComment(String comment) {
     this.clearComment = comment;
+    notifyListeners();
+  }
+
+  void pickImageFromCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    this.pickedImage = File(pickedFile.path);
+    notifyListeners();
+  }
+
+  void pickImageFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    this.pickedImage = File(pickedFile.path);
     notifyListeners();
   }
 
@@ -135,14 +152,51 @@ class AddResultModel extends ChangeNotifier {
   }
 
   Future _addResultData(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
-    await FirebaseFirestore.instance.collection('results').add({
-      'hunterRef': hunterRef,
-      'questRef': currentQuestRef,
-      'time': this.clearTime,
-      'comment': this.clearComment,
-      'clearedAt': FieldValue.serverTimestamp(),
-    })
-        .then((value) => print("New Result Added"))
-        .catchError((error) => print("Failed to add result: $error"));
+    if (this.pickedImage != null) {
+      final fileName = '${hunter.id}${DateTime.now().toString()}.png';
+
+      await _uploadFile(fileName);
+      final resultImageUrl = await _downloadUrl(fileName);
+
+      await FirebaseFirestore.instance.collection('results').add({
+        'hunterRef': hunterRef,
+        'questRef': currentQuestRef,
+        'resultImageUrl': resultImageUrl,
+        'time': this.clearTime,
+        'comment': this.clearComment,
+        'clearedAt': FieldValue.serverTimestamp(),
+      })
+          .then((value) => print("New Result Added"))
+          .catchError((error) => print("Failed to add result: $error"));
+
+    } else {
+      await FirebaseFirestore.instance.collection('results').add({
+        'hunterRef': hunterRef,
+        'questRef': currentQuestRef,
+        'time': this.clearTime,
+        'comment': this.clearComment,
+        'clearedAt': FieldValue.serverTimestamp(),
+      })
+          .then((value) => print("New Result Added"))
+          .catchError((error) => print("Failed to add result: $error"));
+    }
+  }
+
+  Future _uploadFile(String fileName) async {
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref(fileName)
+          .putFile(this.pickedImage);
+    } on FirebaseException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> _downloadUrl(String fileName) async {
+    String url = await firebase_storage.FirebaseStorage.instance
+        .ref(fileName)
+        .getDownloadURL();
+
+    return url;
   }
 }
