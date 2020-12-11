@@ -7,7 +7,7 @@ import 'package:g_sui_hunter/models/result_model.dart';
 import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
-import 'package:g_sui_hunter/views/search_quest_page.dart';
+import 'package:g_sui_hunter/views/search_hunter_page.dart';
 import 'package:g_sui_hunter/views/result_list_page.dart';
 import 'package:g_sui_hunter/views/quest_list_page.dart';
 import 'package:provider/provider.dart';
