@@ -10,7 +10,7 @@ class SearchedQuestList extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => context.read<QuestModel>().fetchQuest(),
-      child: Selector<SearchQuestModel, List<Quest>>(
+      child: Selector<SearchHunterModel, List<Quest>>(
         selector: (context, model) => model.questList,
         builder: (context, model, child) {
           if (model == null) {

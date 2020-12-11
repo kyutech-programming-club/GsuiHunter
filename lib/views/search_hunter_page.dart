@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 class SearchQuestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SearchQuestModel>(
-      create: (context) => SearchQuestModel()..searchQuest(),
+    return ChangeNotifierProvider<SearchHunterModel>(
+      create: (context) => SearchHunterModel()..searchQuest(),
       child: Column(
         children: [
           Expanded(

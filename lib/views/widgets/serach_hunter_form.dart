@@ -9,7 +9,7 @@ class SearchQuestForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final tagList = context.select<TagModel, List<Tag>>((model) => model.tagList);
     return DropdownButton(
-      value: context.select<SearchQuestModel, String>((model) => model.targetTag),
+      value: context.select<SearchHunterModel, String>((model) => model.targetTag),
       icon: Icon(Icons.search),
       items: tagList.map((tag){
         return DropdownMenuItem(
@@ -18,8 +18,8 @@ class SearchQuestForm extends StatelessWidget {
         );
       }).toList(),
       onChanged: (tag) {
-        context.read<SearchQuestModel>().changeTargetTag(tag);
-        context.read<SearchQuestModel>().searchQuest();
+        context.read<SearchHunterModel>().changeTargetTag(tag);
+        context.read<SearchHunterModel>().searchQuest();
       },
     );
   }

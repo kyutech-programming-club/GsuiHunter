@@ -2,12 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/quest.dart';
 
-class SearchQuestModel extends ChangeNotifier {
+class SearchHunterModel extends ChangeNotifier {
   List<Quest> questList = [];
   String targetTag;
 
+  String targetHunterName = '';
+
   void changeTargetTag(tag) {
     this.targetTag = tag;
+    notifyListeners();
+  }
+
+  void changeTargetHunterName(name) {
+    this.targetHunterName = name;
     notifyListeners();
   }
 
