@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/add_result_model.dart';
+import 'package:g_sui_hunter/models/hunter_model.dart';
+import 'package:g_sui_hunter/models/quest_model.dart';
+import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -50,6 +53,9 @@ class ClearQuestButton extends StatelessWidget {
               ),
               onPressed: () async {
                 await context.read<AddResultModel>().clearQuest();
+                await context.read<HunterModel>().fetchHunter();
+                await context.read<QuestModel>().fetchQuest();
+                await context.read<TagModel>().fetchTag();
                 await Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
               },
             );

@@ -41,11 +41,6 @@ class AddResultModel extends ChangeNotifier {
       'quests': FieldValue.arrayUnion([currentQuestRef]),
       'skills': hunterSkills,
     });
-    hunter.currentQuest = null;
-    hunter.rank = hunterRankAndExp['rank'];
-    hunter.exp = hunterRankAndExp['exp'];
-    hunter.skills = hunterSkills;
-    notifyListeners();
   }
 
   Future createState(Hunter hunter) async {
@@ -119,8 +114,6 @@ class AddResultModel extends ChangeNotifier {
       'orderNum': FieldValue.increment(1),
       'timeAve': timeAve.round(),
     });
-
-    this.clearTime = null;
   }
 
   Future _updateTagData(DocumentReference currentQuestRef, DocumentSnapshot currentQuestData) async {
