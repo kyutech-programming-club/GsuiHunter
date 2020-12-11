@@ -8,7 +8,7 @@ class AddResultModel extends ChangeNotifier {
   Hunter hunter;
   Quest currentQuest;
   int clearTime;
-  String clearComment;
+  String clearComment = '';
 
   void changeClearTime(int time) {
     this.clearTime = time;
@@ -21,31 +21,13 @@ class AddResultModel extends ChangeNotifier {
   }
 
   Future clearQuest() async {
-    final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(hunter.id);
-    final hunterData = await hunterRef.get();
+    final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(this.hunter.id);
+    final currentQuestRef = FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id);
 
-    final currentQuestRef = hunterData.data()['currentQuest'];
-    final currentQuestData = await currentQuestRef.get();
-
-    _updateCurrentQuestData(currentQuestData);
-    _updateTagData(currentQuestRef, currentQuestData);
-    _addResult(hunterRef, currentQuestRef);
-
-    final hunterRankAndExp = _calcRankAndExp(hunterData, currentQuestData);
-    final hunterSkills = _calcSkills(hunterData, currentQuestData);
-
-    hunterRef.update({
-      'rank' : hunterRankAndExp['rank'],
-      'exp': hunterRankAndExp['exp'],
-      'currentQuest': null,
-      'quests': FieldValue.arrayUnion([currentQuestRef]),
-      'skills': hunterSkills,
-    });
-    hunter.currentQuest = null;
-    hunter.rank = hunterRankAndExp['rank'];
-    hunter.exp = hunterRankAndExp['exp'];
-    hunter.skills = hunterSkills;
-    notifyListeners();
+    await _updateHunterData(hunterRef, currentQuestRef);
+    await _updateCurrentQuestData(currentQuestRef);
+    await _updateTagData(currentQuestRef);
+    await _addResultData(hunterRef, currentQuestRef);
   }
 
   Future createState(Hunter hunter) async {
@@ -57,9 +39,22 @@ class AddResultModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, int> _calcRankAndExp(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
-    final int preRank = hunterData.data()['rank'];
-    final int questRank = currentQuestData.data()['rank'];
+  Future _updateHunterData(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
+    final hunterRankAndExp = _calcRankAndExp();
+    final hunterSkills = _calcSkills();
+
+    hunterRef.update({
+      'rank' : hunterRankAndExp['rank'],
+      'exp': hunterRankAndExp['exp'],
+      'currentQuest': null,
+      'quests': FieldValue.arrayUnion([currentQuestRef]),
+      'skills': hunterSkills,
+    });
+  }
+
+  Map<String, int> _calcRankAndExp() {
+    final int preRank = this.hunter.rank;
+    final int questRank = this.currentQuest.rank;
 
     if (preRank == 5) {
       return {
@@ -69,7 +64,7 @@ class AddResultModel extends ChangeNotifier {
     }
 
     final int rankUpExp = rankUpExpRule[preRank];
-    final int preExp = hunterData.data()['exp'];
+    final int preExp = this.hunter.exp;
 
     final bool isRankUp = (rankUpExp <= preExp + questRank*10);
     if (isRankUp) {
@@ -86,11 +81,11 @@ class AddResultModel extends ChangeNotifier {
     }
   }
 
-  Map<String, int> _calcSkills(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
+  Map<String, int> _calcSkills() {
     Map<String, int> skills = {};
-    final List<dynamic> questTags = currentQuestData.data()['tags'];
+    final List<dynamic> questTags = this.currentQuest.tags;
 
-    final preSkills = hunterData.data()['skills'];
+    final preSkills = this.hunter.skills;
     if (preSkills == null) {
       questTags.forEach((tag) {
         skills[tag] = 1;
@@ -108,23 +103,20 @@ class AddResultModel extends ChangeNotifier {
     return skills;
   }
 
-  Future _updateCurrentQuestData(DocumentSnapshot currentQuestData) async {
-    final int preTimeAve = currentQuestData.data()['timeAve'];
-    final int preOrderNum = currentQuestData.data()['orderNum'];
+  Future _updateCurrentQuestData(DocumentReference currentQuestRef) async {
+    final int preTimeAve = this.currentQuest.timeAve;
+    final int preOrderNum = this.currentQuest.orderNum;
 
     final timeAve = (preTimeAve * preOrderNum + this.clearTime) / (preOrderNum + 1);
 
-    await FirebaseFirestore.instance.collection('quests').doc(currentQuestData.id)
-        .update({
+    await currentQuestRef.update({
       'orderNum': FieldValue.increment(1),
       'timeAve': timeAve.round(),
     });
-
-    this.clearTime = null;
   }
 
-  Future _updateTagData(DocumentReference currentQuestRef, DocumentSnapshot currentQuestData) async {
-    final currentQuestTagList = currentQuestData.data()['tags'];
+  Future _updateTagData(DocumentReference currentQuestRef) async {
+    final currentQuestTagList = this.currentQuest.tags;
     Future.forEach(
         currentQuestTagList, (tag) async {
       FirebaseFirestore.instance.collection('tags')
@@ -142,10 +134,11 @@ class AddResultModel extends ChangeNotifier {
     });
   }
 
-  Future _addResult(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
+  Future _addResultData(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
     await FirebaseFirestore.instance.collection('results').add({
       'hunterRef': hunterRef,
       'questRef': currentQuestRef,
+      'time': this.clearTime,
       'comment': this.clearComment,
       'clearedAt': FieldValue.serverTimestamp(),
     })

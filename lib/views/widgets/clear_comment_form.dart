@@ -14,6 +14,7 @@ class ClearCommentForm extends StatelessWidget {
           Text('コメント'),
           TextField(
             keyboardType: TextInputType.multiline,
+            maxLength: 58,
             decoration: InputDecoration(
               hintText: 'クリアのコツや感想を教えてください',
               border: OutlineInputBorder(),
