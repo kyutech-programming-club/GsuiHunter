@@ -32,7 +32,7 @@ class AddResultModel extends ChangeNotifier {
     await _addResult();
 
     final hunterRankAndExp = _calcRankAndExp();
-    final hunterSkills = _calcSkills(hunterData, currentQuestData);
+    final hunterSkills = _calcSkills();
 
     hunterRef.update({
       'rank' : hunterRankAndExp['rank'],
@@ -81,11 +81,11 @@ class AddResultModel extends ChangeNotifier {
     }
   }
 
-  Map<String, int> _calcSkills(DocumentSnapshot hunterData, DocumentSnapshot currentQuestData) {
+  Map<String, int> _calcSkills() {
     Map<String, int> skills = {};
-    final List<dynamic> questTags = currentQuestData.data()['tags'];
+    final List<dynamic> questTags = this.currentQuest.tags;
 
-    final preSkills = hunterData.data()['skills'];
+    final preSkills = this.hunter.skills;
     if (preSkills == null) {
       questTags.forEach((tag) {
         skills[tag] = 1;
