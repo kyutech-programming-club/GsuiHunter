@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:g_sui_hunter/models/result.dart';
+import 'package:g_sui_hunter/views/widgets/result_card_header.dart';
 
 class ResultCard extends StatelessWidget {
   const ResultCard({
@@ -16,32 +16,38 @@ class ResultCard extends StatelessWidget {
       builder: ( context, constraints) {
         return SizedBox(
           height: constraints.maxWidth,
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: 5,
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    color: Colors.blue,
-                  ),
+          child: Column(
+            children: [
+              Divider(
+                color: Colors.black54,
+                height: 3,
+                thickness: 2,
+              ),
+              Expanded(
+                flex: 2,
+                child: ResultCardHeader(
+                  result: result,
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    color: Colors.red,
-                  ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  color: Colors.red,
                 ),
-                Expanded(
-                  flex: 14,
-                  child: Container(
-                    color: Colors.green,
-                  ),
+              ),
+              Expanded(
+                flex: 13,
+                child: Container(
+                  color: Colors.green,
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  color: Colors.yellow,
+                ),
+              ),
+            ],
           ),
         );
       },
