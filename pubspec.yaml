@@ -34,6 +34,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
     #効果音素材：ポケットサウンド – https://pocket-se.info/
     - assets/audio/
 
