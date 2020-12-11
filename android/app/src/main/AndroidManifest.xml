@@ -8,7 +8,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="g_sui_hunter"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/g_sui_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
