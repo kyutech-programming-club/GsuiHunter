@@ -53,9 +53,9 @@ class ClearQuestButton extends StatelessWidget {
               ),
               onPressed: () async {
                 await context.read<AddResultModel>().clearQuest();
-                await context.read<HunterModel>().fetchHunter();
-                await context.read<QuestModel>().fetchQuest();
-                await context.read<TagModel>().fetchTag();
+                context.read<HunterModel>().fetchHunter();
+                context.read<QuestModel>().fetchQuest();
+                context.read<TagModel>().fetchTag();
                 await Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
               },
             );
