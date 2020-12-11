@@ -12,7 +12,7 @@ class AddResultModel extends ChangeNotifier {
   int clearTime;
   String clearComment = '';
   final picker = ImagePicker();
-  File takenImage;
+  File pickedImage;
 
   void changeClearTime(int time) {
     this.clearTime = time;
@@ -24,9 +24,15 @@ class AddResultModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void imagePicker() async {
+  void pickImageFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-    this.takenImage = File(pickedFile.path);
+    this.pickedImage = File(pickedFile.path);
+    notifyListeners();
+  }
+
+  void pickImageFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    this.pickedImage = File(pickedFile.path);
     notifyListeners();
   }
 

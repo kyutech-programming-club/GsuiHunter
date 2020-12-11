@@ -29,7 +29,7 @@ class ClearQuestImage extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.contain,
             child: Selector<AddResultModel, Tuple2<String, File>>(
-              selector: (context, model) => Tuple2(model.currentQuest.imageUrl, model.takenImage),
+              selector: (context, model) => Tuple2(model.currentQuest.imageUrl, model.pickedImage),
               builder: (context, model, child) {
                 if (model.item2 == null) {
                   return CachedNetworkImage(
@@ -49,7 +49,35 @@ class ClearQuestImage extends StatelessWidget {
           child: IconButton(
             icon: Icon(Icons.camera_alt),
             iconSize: 50,
-            onPressed: () => print('カメラ起動'),
+            onPressed: () => showModalBottomSheet(
+              context: context,
+              builder: (BuildContext bc) {
+                return SafeArea(
+                  child: Container(
+                    child: Wrap(
+                      children: <Widget>[
+                        ListTile(
+                          leading: Icon(Icons.photo_library),
+                          title: Text('ライブラリ'),
+                          onTap: () {
+                            context.read<AddResultModel>().pickImageFromGallery();
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.photo_camera),
+                          title: Text('カメラ'),
+                          onTap: () {
+                            context.read<AddResultModel>().pickImageFromCamera();
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
