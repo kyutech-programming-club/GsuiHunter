@@ -25,6 +25,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^0.1.9
 
 flutter:
   uses-material-design: true
+
+flutter_native_splash:
+  image: assets/images/g_sui_icon.png
+  color: "ffffff"
