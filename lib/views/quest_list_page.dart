@@ -20,9 +20,9 @@ class QuestListPage extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Text(
-                    '${context.select<HunterModel, int>((model) => model.hunter.exp)}'
-                        + '/'
-                        + '${rankUpExpRule[context.select<HunterModel, int>((model) => model.hunter.rank)]}'
+                  '${context.select<HunterModel, int>((model) => model.hunter.exp)}'
+                      '/'
+                      '${rankUpExpRule[context.select<HunterModel, int>((model) => model.hunter.rank)]}',
                 ),
               ),
               Expanded(
@@ -34,7 +34,7 @@ class QuestListPage extends StatelessWidget {
                         Radius.circular(50.0),
                       ),
                       child: LayoutBuilder(
-                        builder: (context, constraints){
+                        builder: (context, constraints) {
                           return Container(
                             color: Colors.black,
                             height: constraints.maxHeight*0.2,
@@ -48,12 +48,12 @@ class QuestListPage extends StatelessWidget {
                         bottomLeft: Radius.circular(50.0),
                       ),
                       child: LayoutBuilder(
-                        builder: (context, constraints){
+                        builder: (context, constraints) {
                           return Container(
                             color: Colors.orangeAccent,
                             height: constraints.maxHeight*0.2,
                             width: constraints.maxWidth
-                                *context.select<HunterModel, int>((model) => model.hunter.exp )
+                                *context.select<HunterModel, int>((model) => model.hunter.exp)
                                 /rankUpExpRule[context.select<HunterModel, int>((model) => model.hunter.rank)],
                           );
                         },
