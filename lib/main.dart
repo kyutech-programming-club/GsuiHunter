@@ -34,9 +34,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<TagModel>(
           create: (context) => TagModel()..fetchTag(),
         ),
-        ChangeNotifierProvider<ResultModel>(
-          create: (context) => ResultModel()..fetchResult(),
-        ),
         ChangeNotifierProvider<BottomNavModel>(
           create: (context) => BottomNavModel(),
         ),
