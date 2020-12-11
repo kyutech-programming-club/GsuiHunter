@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/hunter.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class SearchedHunterInfo extends StatelessWidget {
   SearchedHunterInfo({
@@ -31,13 +32,14 @@ class SearchedHunterInfo extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: Selector<HunterModel, List<dynamic>>(
-            selector: (context, model) => model.hunter.followee,
-            builder: (context, followee, child) {
+          child: Selector<HunterModel, Tuple2<List<dynamic>, String>>(
+            selector: (context, model) => Tuple2(model.hunter.followee, model.hunter.id),
+            builder: (context, model, child) {
               final targetHunterRef = FirebaseFirestore.instance
                   .collection('hunters').doc(this.targetHunter.id);
-
-              if (followee != null && followee.contains(targetHunterRef)) {
+              if (this.targetHunter.id == model.item2) {
+                return Container();
+              } else if (model.item1 != null && model.item1.contains(targetHunterRef)) {
                 return RaisedButton(
                   onPressed: () async {
                     await context.read<HunterModel>().unFollowHunter(targetHunterRef);
