@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:g_sui_hunter/models/hunter.dart';
+import 'package:g_sui_hunter/models/quest.dart';
 
 class Result {
-  Result(DocumentSnapshot doc) {
+  Result(DocumentSnapshot doc, Hunter hunter, Quest quest) {
     this.id = doc.id;
-    this.hunterRef = doc.data()['hunterRef'];
-    this.questRef = doc.data()['questRef'];
+    this.hunter = hunter;
+    this.quest = quest;
     this.time = doc.data()['time'];
     this.comment = doc.data()['comment'];
     this.clearedAt = doc.data()['clearedAt'].toDate();
@@ -12,8 +14,8 @@ class Result {
   }
 
   String id;
-  DocumentReference hunterRef;
-  DocumentReference questRef;
+  Hunter hunter;
+  Quest quest;
   int time;
   String comment;
   DateTime clearedAt;
