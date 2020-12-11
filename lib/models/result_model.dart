@@ -10,12 +10,13 @@ class ResultModel extends ChangeNotifier {
   Future fetchResult() async {
     final QuerySnapshot questSnapshots = await FirebaseFirestore.instance.collection('results').orderBy('clearedAt', descending: true).get();
     final resultList = [];
-    await Future.forEach(questSnapshots.docs, (doc) async {
+    Future.forEach(questSnapshots.docs, (doc) async {
       final hunter = Hunter(await doc.data()['hunterRef'].get());
       final quest = Quest(await doc.data()['questRef'].get());
       resultList.add(Result(doc, hunter, quest));
+    }).then((value) {
+      this.resultList = List<Result>.from(resultList);
+      notifyListeners();
     });
-    this.resultList = List<Result>.from(resultList);
-    notifyListeners();
   }
 }
