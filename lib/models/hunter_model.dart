@@ -71,4 +71,18 @@ class HunterModel extends ChangeNotifier {
     this.hunter.followee.add(targetHunter);
     notifyListeners();
   }
+
+  Future unFollowHunter(DocumentReference targetHunter) async {
+    final hunterRef = FirebaseFirestore.instance
+        .collection('hunters').doc(this.hunter.id);
+
+    hunterRef.update({
+      'followee': FieldValue.arrayRemove([targetHunter]),
+    })
+        .then((value) => print('Unfollow hunter'))
+        .catchError((error) => print("Failed to unfollow hunter: $error"));
+
+    this.hunter.followee.remove(targetHunter);
+    notifyListeners();
+  }
 }

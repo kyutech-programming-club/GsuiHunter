@@ -40,7 +40,7 @@ class SearchedHunterInfo extends StatelessWidget {
               if (followee != null && followee.contains(targetHunterRef)) {
                 return RaisedButton(
                   onPressed: () async {
-                    await context.read<HunterModel>().followHunter(targetHunterRef);
+                    await context.read<HunterModel>().unFollowHunter(targetHunterRef);
                     await context.read<HunterModel>().fetchHunter();
                   },
                   color: Colors.lightBlue,
