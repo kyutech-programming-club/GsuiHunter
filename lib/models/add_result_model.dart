@@ -27,7 +27,7 @@ class AddResultModel extends ChangeNotifier {
     await _updateHunterData(hunterRef, currentQuestRef);
     await _updateCurrentQuestData();
     await _updateTagData();
-    await _addResult();
+    await _addResultData();
   }
 
   Future createState(Hunter hunter) async {
@@ -136,7 +136,7 @@ class AddResultModel extends ChangeNotifier {
     });
   }
 
-  Future _addResult() async {
+  Future _addResultData() async {
     await FirebaseFirestore.instance.collection('results').add({
       'hunterRef': FirebaseFirestore.instance.collection('hunters').doc(this.hunter.id),
       'questRef': FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id),
