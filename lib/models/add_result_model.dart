@@ -27,7 +27,7 @@ class AddResultModel extends ChangeNotifier {
     final currentQuestRef = hunterData.data()['currentQuest'];
     final currentQuestData = await currentQuestRef.get();
 
-    await _updateCurrentQuestData(currentQuestData);
+    await _updateCurrentQuestData();
     await _updateTagData(currentQuestRef, currentQuestData);
     await _addResult(hunterRef, currentQuestRef);
 
@@ -103,13 +103,13 @@ class AddResultModel extends ChangeNotifier {
     return skills;
   }
 
-  Future _updateCurrentQuestData(DocumentSnapshot currentQuestData) async {
-    final int preTimeAve = currentQuestData.data()['timeAve'];
-    final int preOrderNum = currentQuestData.data()['orderNum'];
+  Future _updateCurrentQuestData() async {
+    final int preTimeAve = this.currentQuest.timeAve;
+    final int preOrderNum = this.currentQuest.orderNum;
 
     final timeAve = (preTimeAve * preOrderNum + this.clearTime) / (preOrderNum + 1);
 
-    await FirebaseFirestore.instance.collection('quests').doc(currentQuestData.id)
+    await FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id)
         .update({
       'orderNum': FieldValue.increment(1),
       'timeAve': timeAve.round(),
