@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:g_sui_hunter/models/bottom_nav_model.dart';
 import 'package:g_sui_hunter/models/hunter.dart';
 import 'package:g_sui_hunter/models/hunter_model.dart';
-import 'package:g_sui_hunter/models/result.dart';
-import 'package:g_sui_hunter/models/result_model.dart';
 import 'package:g_sui_hunter/models/tag.dart';
 import 'package:g_sui_hunter/models/tag_model.dart';
 import 'package:g_sui_hunter/models/user_auth_model.dart';
@@ -17,8 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final hunter = context.select<HunterModel, Hunter>((value) => value.hunter);
     final tagList = context.select<TagModel, List<Tag>>((value) => value.tagList);
-    final resultList = context.select<ResultModel, List<Result>>((value) => value.resultList);
-    if (hunter == null || tagList == [] || resultList == []) {
+    if (hunter == null || tagList == []) {
       return Scaffold(
         appBar: AppBar(),
         body: Center(
@@ -30,7 +27,7 @@ class HomePage extends StatelessWidget {
       final List<Widget> pages = [
         QuestListPage(),
         SearchQuestPage(),
-        ResultListPage(),
+        ResultListPage(hunter: hunter),
       ];
       return Scaffold(appBar: AppBar(
         title: Text('自炊ハンター'),
