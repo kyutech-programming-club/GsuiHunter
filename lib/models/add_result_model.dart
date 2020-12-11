@@ -24,10 +24,22 @@ class AddResultModel extends ChangeNotifier {
     final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(this.hunter.id);
     final currentQuestRef = FirebaseFirestore.instance.collection('quests').doc(this.currentQuest.id);
 
+    await _updateHunterData(hunterRef, currentQuestRef);
     await _updateCurrentQuestData();
     await _updateTagData();
     await _addResult();
+  }
 
+  Future createState(Hunter hunter) async {
+    this.hunter = hunter;
+
+    final questSnapshot = await hunter.currentQuest.get();
+    this.currentQuest = Quest(questSnapshot);
+
+    notifyListeners();
+  }
+
+  Future _updateHunterData(DocumentReference hunterRef, DocumentReference currentQuestRef) async {
     final hunterRankAndExp = _calcRankAndExp();
     final hunterSkills = _calcSkills();
 
@@ -38,15 +50,6 @@ class AddResultModel extends ChangeNotifier {
       'quests': FieldValue.arrayUnion([currentQuestRef]),
       'skills': hunterSkills,
     });
-  }
-
-  Future createState(Hunter hunter) async {
-    this.hunter = hunter;
-
-    final questSnapshot = await hunter.currentQuest.get();
-    this.currentQuest = Quest(questSnapshot);
-
-    notifyListeners();
   }
 
   Map<String, int> _calcRankAndExp() {
