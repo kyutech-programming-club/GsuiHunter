@@ -28,43 +28,65 @@ class AddResultPage extends StatelessWidget {
           Center(
             child: CircularProgressIndicator(),
           ) :
-          SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  AppBar().preferredSize.height -
-                  MediaQuery.of(context).padding.top,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: ClearQuestInfo(),
+          Stack(
+            children: [
+              SingleChildScrollView(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height -
+                      AppBar().preferredSize.height -
+                      MediaQuery.of(context).padding.top,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: ClearQuestInfo(),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: ClearQuestImage(),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: ClearQuestImage(),
-                        ),
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: ClearTimeForm(),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: ClearCommentForm(),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: ClearQuestButton(),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: ClearTimeForm(),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: ClearCommentForm(),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: ClearQuestButton(),
-                  ),
-                ],
+                ),
               ),
-            ),
+              Align(
+                alignment: Alignment.center,
+                child: Selector<HunterModel, bool>(
+                  selector: (context, model) => model.animationVisible,
+                  builder: (context, animationVisible, child) {
+                    if (!animationVisible) {
+                      return Container();
+                    }
+                    return AnimatedOpacity(
+                      opacity: animationVisible ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: 100),
+                      child: Image(
+                        image: AssetImage('assets/images/quest_clear.png'),
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
           ),
         );
       },

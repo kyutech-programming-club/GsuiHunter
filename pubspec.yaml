@@ -23,6 +23,7 @@ dependencies:
   auto_size_text: ^2.1.0
   tuple: ^1.0.3
   image_picker: ^0.6.7+15
+  assets_audio_player: ^2.0.13+1
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +32,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    #効果音素材：ポケットサウンド – https://pocket-se.info/
+    - assets/audio/
 
 flutter_native_splash:
   image: assets/images/g_sui_icon.png

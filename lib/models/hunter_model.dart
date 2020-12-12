@@ -7,6 +7,12 @@ import 'package:g_sui_hunter/models/quest.dart';
 class HunterModel extends ChangeNotifier {
   User currentUser = FirebaseAuth.instance.currentUser;
   Hunter hunter;
+  bool animationVisible = false;
+
+  void switchAnimationVisible() {
+    this.animationVisible = !this.animationVisible;
+    notifyListeners();
+  }
 
   Future fetchHunter() async {
     final hunterRef = FirebaseFirestore.instance.collection('hunters').doc(currentUser.uid);
