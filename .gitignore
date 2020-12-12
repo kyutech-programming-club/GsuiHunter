@@ -39,3 +39,14 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# Firebase related
+google-services.json
+GoogleService-Info.plist
+
+# iOS related
+project.pbxproj
+contents.xcworkspacedata
+
+# sound related
+*.mp3
