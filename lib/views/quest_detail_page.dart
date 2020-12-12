@@ -157,8 +157,8 @@ class QuestDetailPage extends StatelessWidget {
                 return AnimatedOpacity(
                   opacity: animationVisible ? 1.0 : 0.0,
                   duration: Duration(milliseconds: 100),
-                  child: FittedBox(
-                    child: Image(image: AssetImage('assets/images/quest_start.png')),
+                  child: Image(
+                    image: AssetImage('assets/images/quest_start.png'),
                   ),
                 );
               },

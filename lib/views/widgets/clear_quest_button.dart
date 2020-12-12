@@ -53,6 +53,7 @@ class ClearQuestButton extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
+                context.read<HunterModel>().switchAnimationVisible();
                 final assetsAudioPlayer = AssetsAudioPlayer();
                 assetsAudioPlayer.open(
                   Audio("assets/audio/tousen.mp3",),
@@ -61,6 +62,8 @@ class ClearQuestButton extends StatelessWidget {
                 context.read<HunterModel>().fetchHunter();
                 context.read<QuestModel>().fetchQuest();
                 context.read<TagModel>().fetchTag();
+                await Future.delayed(Duration(milliseconds: 1500));
+                context.read<HunterModel>().switchAnimationVisible();
                 await Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
               },
             );
